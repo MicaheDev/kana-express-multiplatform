@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+
+@font-face {
+    font-family: 'Departure Mono';
+    src: url('/fonts/DepartureMono-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'DotGothic16';
+    src: url('/fonts/DotGothic16-Regular.ttf') format('trueType');
+}
+
+
+
+@theme {
+    --color-beige-400: oklch(80.11% 0.140 60.19);
+    --color-gray-700: oklch(0.4423 0 0);
+    --color-pink-400: oklch(0.9047 0.0495 16.57);
+
+
+    --color-primary: oklch(0.9047 0.0495 16.57);
+    --color-characters: oklch(0.4423 0 0);
+    --color-background: oklch(1 0 0);
+    --color-contrast-bg: oklch(0.9612 0 0);
+
+    --color-dark-primary: oklch(0.613 0.1141 20.93);
+    --color-dark-characters: oklch(1 0 0);
+    --color-dark-background: oklch(0.3089 0.0254 18.62);
+    --color-dark-contrast-bg: oklch(0.2882 0.015 18.06);
+
+    --color-decoration: oklch(0.6268 0 0);
+
+
+    --font-departure_mono: "Departure Mono";
+    --font-jpn: "DotGothic16"
+}
+
+
+@layer {
+
+    .btn-primary {
+        @apply w-full shadow-up bg-primary dark:bg-dark-primary p-4 border border-characters dark:border-dark-characters rounded-xl;
+    }
+
+    .btn-secondary {
+        @apply w-full shadow-up bg-background dark:bg-dark-background p-4 border border-characters dark:border-dark-characters rounded-xl;
+    }
+}
+
+@utility shadow-up {
+    @apply shadow-characters dark:shadow-dark-characters;
+    box-shadow: 0 6px 0 currentColor;
+}
+
+@utility selected-decoration {
+    @apply shadow-characters dark:shadow-dark-characters;
+    box-shadow: inset 0 -6px 0 currentColor;
+}
+
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply font-black text-characters dark:text-dark-characters;
+}
+
+button {
+    @apply font-bold text-characters dark:text-dark-characters;
+}
+
+input,
+textarea {
+    @apply bg-contrast-bg dark:bg-dark-contrast-bg text-characters dark:text-dark-characters focus:outline-4 focus:outline-characters dark:focus:outline-dark-characters placeholder:text-characters/80 dark:placeholder:text-dark-characters/80;
+}
+
+
+
+body {
+    @apply text-base text-decoration dark:text-decoration font-departure_mono;
+}
