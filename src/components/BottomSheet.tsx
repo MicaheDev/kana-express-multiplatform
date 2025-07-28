@@ -21,8 +21,7 @@ export default function BottomSheet({ isVisible, setIsVisible, children, classNa
     }));
 
     return (
-        <div className={`fixed flex flex-col overflow-hidden w-screen h-screen bg-background dark:bg-dark-background z-[100] duration-300 transition-transform top-0 ${isVisible ? "translate-y-0" : "translate-y-full"}`}>
-            <div className="bg-background shrink-0 dark:bg-dark-background h-[20px]"></div>
+        <div className={`bottom-sheet fixed flex flex-col overflow-hidden w-screen h-screen bg-background dark:bg-dark-background z-[100] duration-300 transition-transform top-0 ${isVisible ? "translate-y-0" : "translate-y-full"}`}>
 
             <header className="h-[70px] shrink-0 border-b border-characters  w-full flex justify-end items-center px-3">
                 <button onClick={() => setIsVisible(false)}>

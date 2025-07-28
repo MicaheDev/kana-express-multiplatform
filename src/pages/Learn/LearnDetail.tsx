@@ -287,7 +287,6 @@ export default function LearnDetail() {
     return (
         <>
             <div className="overflow-hidden w-screen h-screen flex flex-col">
-                <div className="h-[20px] shrink-0"></div>
                 <NavigationTopBar isPrevActive />
                 <div className="grow h-full overflow-y-auto p-6 flex gap-4 flex-col ">
 

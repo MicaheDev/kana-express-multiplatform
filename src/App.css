@@ -12,7 +12,6 @@
 }
 
 
-
 @theme {
     --color-beige-400: oklch(80.11% 0.140 60.19);
     --color-gray-700: oklch(0.4423 0 0);
@@ -34,11 +33,39 @@
 
     --font-departure_mono: "Departure Mono";
     --font-jpn: "DotGothic16"
+
+    
 }
+
+
+
+:root {
+  --status-bar-height: env(safe-area-inset-top, 0px);
+  --navigation-bar-height: env(safe-area-inset-bottom, 0px);
+}
+
+body, .bottom-sheet {
+  padding-top: var(--status-bar-height);
+  padding-bottom: var(--navigation-bar-height);
+}
+
+/* Si tu menú está abajo, ajústalo así: */
+.bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: var(--navigation-bar-height); /* Para que no se solape con la navigation bar */
+  /* Otros estilos de tu menú */
+}
+
 
 
 @layer {
 
+    body {
+        @apply bg-background dark:bg-dark-background;
+    }
     .btn-primary {
         @apply w-full shadow-up bg-primary dark:bg-dark-primary p-4 border border-characters dark:border-dark-characters rounded-xl;
     }
