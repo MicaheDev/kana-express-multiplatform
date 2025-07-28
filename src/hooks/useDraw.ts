@@ -11,7 +11,7 @@ interface CanvasHistory {
 }
 
 const STROKE_CONFIG = {
-    size: 20, // Grosor del trazo
+    size: 10, // Grosor del trazo
     thinning: 0.3, // Influencia de la presión en el grosor (0: sin influencia; > 0: adelgaza con baja presión, engrosa con alta presión/lentitud).
     smoothing: 0, // Suavizado del trazo (0: muy suave; > 0: esquina cuadradas o rotas) 
     streamline: 0.6, // Estabilizador del trazo (0: desactivado, mano alzada; > 0: activado, mayor correción)
@@ -26,6 +26,7 @@ export const useDraw = (canvasRef: RefObject<HTMLCanvasElement | null>) => {
     const [isDrawing, setIsDrawing] = useState(false)
     const [currentPoints, setCurrentPoints] = useState<Point[]>([]); // Array para almacenar los puntos del trazo actual
     const strokesRef = useRef(0); // Ref para almacenar el número de trazos
+    const [strokeColor, setStrokeColor] = useState<string>("#000000"); // Nuevo estado para el color del trazo (negro por defecto)
 
     //History
     const [history, setHistory] = useState<CanvasHistory[]>([]);
@@ -46,6 +47,29 @@ export const useDraw = (canvasRef: RefObject<HTMLCanvasElement | null>) => {
         setHistoryIndex(0);
 
     }, [ctx])
+
+      // Efecto para detectar y actualizar el tema del sistema
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const handleChange = (e: MediaQueryListEvent) => {
+            // Si el tema es oscuro, usa blanco; de lo contrario, usa negro.
+            setStrokeColor(e.matches ? "#FFFFFF" : "#000000");
+        };
+
+        // Establece el color inicial al cargar
+        setStrokeColor(mediaQuery.matches ? "#FFFFFF" : "#000000");
+
+        // Añade el listener para cambios futuros
+        mediaQuery.addEventListener('change', handleChange);
+
+        // Limpia el listener cuando el componente se desmonte
+        return () => {
+            mediaQuery.removeEventListener('change', handleChange);
+        };
+    }, []); // Se ejecuta una sola vez al montar el componente
+
+
 
 
     function onStrokeEnd() {
@@ -74,29 +98,28 @@ export const useDraw = (canvasRef: RefObject<HTMLCanvasElement | null>) => {
 
         };
 
-        document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener("pointerup", handleMouseUp);
 
         // Limpiar los listeners al desmontar el componente
         return () => {
-            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('pointerup', handleMouseUp);
         };
     }, [ctx, isDrawing, saveState, onStrokeEnd])
 
 
 
-
-
     function startDraw(e: React.MouseEvent<HTMLCanvasElement>) {
-        if (e.button !== 0) return;
+        //if (e.button !== 0) return;
 
         setIsDrawing(true)
         setCurrentPoints([{ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY }]); // Inicializa el primer punto
 
         if (!ctx) return;
         ctx.beginPath()
-        ctx.lineWidth = 20;
+        ctx.lineWidth = STROKE_CONFIG.size;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
+        ctx.fillStyle = strokeColor;
 
         ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY); // Mueve al primer punto
     }

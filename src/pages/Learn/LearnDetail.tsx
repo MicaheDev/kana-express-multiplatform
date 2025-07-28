@@ -105,6 +105,7 @@ export default function LearnDetail() {
                         : row
                 );
                 setKana(updatedKana);
+                setShowBoard(false)
             } else {
                 alert(`Inténtalo de nuevo. El número de trazos esperado es ${currentKana.strokes}, y has realizado ${boardRef.current?.strokesLength}.`);
                 return;
@@ -283,7 +284,6 @@ export default function LearnDetail() {
         setIsStart(true); changeMediaSources(); setProgress(null)
     }
 
-
     return (
         <>
             <div className="overflow-hidden w-screen h-screen flex flex-col">
@@ -305,11 +305,12 @@ export default function LearnDetail() {
 
             <BottomSheet isVisible={showBoard} setIsVisible={setShowBoard}>
                 <div className="flex flex-col h-full w-full gap-4">
-                    <div className="flex flex-col gap-2 items-center justify-center">
+                    <div className="flex gap-2 items-center justify-center">
                         <span className="bg-gray-700 text-white w-auto inline-flex justify-center items-center rounded-md h-[40px] px-4 outline outline-gray-700">
 
                             Fonética: "{removeExtensionName((kana[selectedRow][selectedCol] as Kana).sound)}"
                         </span>
+              
 
                     </div>
                     <Board ref={boardRef}>
@@ -336,7 +337,7 @@ export default function LearnDetail() {
 
                             {gif && (
                                 <img
-                                    className={`w-full mix-blend-multiply py-[70px] h-full object-contain absolute inset-0 m-auto pointer-events-none transition-opacity duration-300 ${showGif ? "opacity-30" : "opacity-0"} `}
+                                    className={`w-full mix-blend-multiply pt-[70px] h-full object-contain absolute inset-0 m-auto pointer-events-none transition-opacity duration-300 ${showGif ? "opacity-30" : "opacity-0"} `}
                                     src={`/gifs/${kanaType === 'hiragana' ? 'hiragana' : 'katakana'}/${gif}`}
                                     width="10px"
                                     height="10px"
@@ -348,7 +349,7 @@ export default function LearnDetail() {
 
                     <div className='bg-characters dark:bg-dark-characters w-full rounded-xl'>
                         <button className='bg-primary dark:bg-dark-primary w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-2 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'
-                            onClick={() => { }}>Verificar</button>
+                            onClick={() => { verifyKana()}}>Verificar</button>
                     </div>
                 </div>
 

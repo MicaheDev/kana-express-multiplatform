@@ -1,4 +1,4 @@
-import { useImperativeHandle, useRef, type ReactNode, type RefObject } from "react"
+import { forwardRef, useImperativeHandle, useRef, type ReactNode } from "react"
 import { LuEraser, LuRedo2, LuUndo2 } from "react-icons/lu";
 import { useDraw } from "../hooks/useDraw";
 
@@ -7,37 +7,40 @@ export interface BoardRef {
     strokesLength: number;
 }
 
-const Board = ({ children, ref }: { children?: ReactNode, ref: React.Ref<BoardRef> }) => {
+const Board = forwardRef<BoardRef, { children?: ReactNode }>(({ children }, ref) => {
 
-    const canvasRef: RefObject<HTMLCanvasElement> = useRef(null)
+    const canvasRef = useRef<HTMLCanvasElement>(null); // Asegúrate de que useRef tenga el tipo correcto
 
-    const { startDraw, drawing, clearCanvas, undo, redo, historyIndex, history, strokesRef } = useDraw(canvasRef)
+    // Usa tu hook de dibujo, pasando el canvasRef
+    const { startDraw, drawing, clearCanvas, undo, redo, historyIndex, history, strokesRef } = useDraw(canvasRef);
 
-
+    // Usa useImperativeHandle para exponer los métodos y propiedades al ref del padre
     useImperativeHandle(ref, () => ({
-        clearCanvas: clearCanvas,
-        strokesLength: strokesRef.current
-        // Si tienes otras funciones, las añadirías aquí
+        clearCanvas: clearCanvas, // Exponemos la función clearCanvas
+        strokesLength: strokesRef.current // Exponemos la longitud actual de los trazos
     }));
-
 
     return (
         <>
             <div className="outline outline-characters dark:outline-dark-characters grow w-full h-full select-none relative rounded-2xl overflow-hidden bg-contrast dark:bg-dark-contrast-bg">
 
-                <div className="h-[70px] w-full border-b"/>
+                <div className="h-[70px] w-full border-b" />
                 <canvas
-                    ref={canvasRef}
+                    ref={canvasRef} // Asigna el ref interno al elemento canvas
                     className="w-full h-full"
-                    onMouseDown={startDraw}
-                    onMouseMove={drawing}
+                    onPointerDown={startDraw}
+                    onPointerMove={drawing}
+                    style={{ touchAction: 'none' }}
                 ></canvas>
+
+
+                <div className="absolute bottom-2 left-2">Trazos: {strokesRef.current}</div>
 
 
                 <div className='bg-characters dark:bg-dark-characters  rounded-xl absolute top-4 right-2'>
                     <button className='bg-background dark:bg-dark-background  h-full p-3 rounded-xl border border-characters dark:border-dark-characters -translate-y-1.5 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'
                         onClick={clearCanvas}>
-                        <LuEraser/>
+                        <LuEraser />
                     </button>
                 </div>
 
@@ -47,7 +50,7 @@ const Board = ({ children, ref }: { children?: ReactNode, ref: React.Ref<BoardRe
 
                         <button onClick={undo}
                             disabled={historyIndex <= 0}
-                            className='bg-background dark:bg-dark-background  h-full p-3 rounded-xl border border-characters dark:border-dark-characters -translate-y-1.5 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'>
+                            className='bg-background dark:bg-dark-background  h-full p-3 rounded-xl border border-characters dark:border-characters -translate-y-1.5 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'>
                             <LuUndo2 />
                         </button>
                     </div>
@@ -67,6 +70,8 @@ const Board = ({ children, ref }: { children?: ReactNode, ref: React.Ref<BoardRe
 
         </>
     )
-}
+})
+
+
 
 export default Board
