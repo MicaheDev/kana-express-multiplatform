@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { HiraganaList, Modes } from "../../data/kana";
+import { HiraganaList, KatakanaList, Modes } from "../../data/kana";
 import NavigationBottomBar from "../../components/NavigationBottomBar";
+import { useNavigate } from "react-router";
 
 interface MenuItem {
   label: string;
@@ -18,7 +19,17 @@ const modeMenu: MenuItem[] = [
 ];
 export default function Learn() {
 
+  const navigate = useNavigate()
+
   const [selectedMode, setSelectedMode] = useState<Modes>(Modes.hiragana);
+
+  const [kana, setKana] = useState(selectedMode === 'hiragana' ? [...Object.entries(HiraganaList)] : [...Object.entries(KatakanaList)]);
+
+  function changeSelection(item: MenuItem) {
+    setSelectedMode(item.name as Modes)
+    setKana(item.name === 'hiragana' ? [...Object.entries(HiraganaList)] : [...Object.entries(KatakanaList)])
+  }
+
   return (
 
     <div className="overflow-hidden w-screen h-screen flex flex-col">
@@ -39,7 +50,7 @@ export default function Learn() {
               id={item.name}
               value={item.name}
               checked={selectedMode === item.name}
-              onChange={() => setSelectedMode(item.name as Modes)}
+              onChange={() => changeSelection(item)}
             />
             <div className="flex justify-center items-center w-full h-full">
               <p className="font-bold w-full text-center text-lg">
@@ -51,7 +62,7 @@ export default function Learn() {
       </header>
       <div className="grow h-full overflow-y-auto p-6 flex gap-4 flex-col">
         <div className="grid grid-rows-10 grid-cols-5 gap-3">
-          {Object.entries(HiraganaList).map(([key, value]) => (
+          {kana.map(([key, value]) => (
             <div key={key} className="shadow-up flex flex-col bg-contrast-bg text-characters dark:text-dark-characters dark:bg-dark-contrast-bg justify-center items-center p-2 rounded-xl border border-characters dark:border-dark-characters ">
               <h3 className="text-lg">{key}</h3>
               <p className="text-decoration text-xs">{value}</p>
@@ -60,11 +71,11 @@ export default function Learn() {
 
         </div>
 
-        <button className="btn-primary">Comenzar</button>
+        <button className="btn-primary" onClick={() => navigate(`/learn/${selectedMode}`)}>Comenzar</button>
 
       </div>
 
-      <NavigationBottomBar/>
+      <NavigationBottomBar />
     </div>
   )
 }

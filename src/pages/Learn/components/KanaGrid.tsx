@@ -10,7 +10,7 @@ type KanaGridProps = {
 
 export default function KanaGrid({kana, selectedCol, selectedRow, navigateToKana}: KanaGridProps) {
     return (
-        <div className="w-min h-min outline outline-gray-700 flex flex-col overflow-hidden rounded-xl select-none">
+        <div className="w-ful bg-characters dark:bg-dark-characters min-h-[550px] max-h-[550px] outline grow overflow-hidden outline-characters dark:outline-dark-characters flex flex-col rounded-xl select-none">
             {/* Filas*/}
             {kana.map((_, row) => (
                 <div className="flex" key={`row-${row + 1}`}>

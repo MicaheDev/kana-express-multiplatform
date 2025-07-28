@@ -23,32 +23,43 @@ const Board = ({ children, ref }: { children?: ReactNode, ref: React.Ref<BoardRe
 
     return (
         <>
-            <div className="outline outline-gray-700 w-[700px] h-[700px] select-none relative rounded-2xl overflow-hidden bg-neutral-100">
+            <div className="outline outline-characters dark:outline-dark-characters grow w-full h-full select-none relative rounded-2xl overflow-hidden bg-contrast dark:bg-dark-contrast-bg">
 
+                <div className="h-[70px] w-full border-b"/>
                 <canvas
                     ref={canvasRef}
-                    width={700}
-                    height={700}
+                    className="w-full h-full"
                     onMouseDown={startDraw}
                     onMouseMove={drawing}
                 ></canvas>
 
-                <button onClick={clearCanvas} className="bg-white w-[60px] absolute top-0 right-0 m-2 h-[60px] text-2xl outline outline-gray-700 justify-center">
-                    <LuEraser />
-                </button>
+
+                <div className='bg-characters dark:bg-dark-characters  rounded-xl absolute top-4 right-2'>
+                    <button className='bg-background dark:bg-dark-background  h-full p-3 rounded-xl border border-characters dark:border-dark-characters -translate-y-1.5 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'
+                        onClick={clearCanvas}>
+                        <LuEraser/>
+                    </button>
+                </div>
 
 
-                <div className="absolute top-0 left-0 m-2 inline-flex gap-2 items-center">
-                    <button onClick={undo}
-                        disabled={historyIndex <= 0}
-                        className="bg-white w-[60px] text-2xl h-[60px] outline outline-gray-700 justify-center disabled:opacity-30">
-                        <LuUndo2 />
-                    </button>
-                    <button onClick={redo}
-                        disabled={historyIndex >= history.length - 1}
-                        className="bg-white w-[60px] text-2xl h-[60px] outline outline-gray-700 justify-center disabled:opacity-30">
-                        <LuRedo2 />
-                    </button>
+                <div className="absolute top-4 left-2 inline-flex gap-2 items-center">
+                    <div className='bg-characters dark:bg-dark-characters rounded-xl'>
+
+                        <button onClick={undo}
+                            disabled={historyIndex <= 0}
+                            className='bg-background dark:bg-dark-background  h-full p-3 rounded-xl border border-characters dark:border-dark-characters -translate-y-1.5 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'>
+                            <LuUndo2 />
+                        </button>
+                    </div>
+                    <div className='bg-characters dark:bg-dark-characters rounded-xl'>
+
+                        <button onClick={redo}
+                            disabled={historyIndex >= history.length - 1}
+                            className='bg-background dark:bg-dark-background  h-full p-3 rounded-xl border border-characters dark:border-dark-characters -translate-y-1.5 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'>
+                            <LuRedo2 />
+                        </button>
+                    </div>
+
                 </div>
 
                 {children}

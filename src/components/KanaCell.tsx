@@ -13,7 +13,11 @@ const KanaCell = memo(({ item, isSelected, isDecoration, isGuide, isTodo, onClic
     return (
         <div
             onClick={onClick}
-            className={`w-[50px] h-[50px] font-jpn border border-neutral-300 flex justify-center items-center ${isDecoration && 'bg-neutral-300' } ${isGuide && 'bg-neutral-100'}  ${isSelected && 'bg-pink-400'} ${isTodo && 'bg-green-200'} `}
+            className={`w-full h-[50px] font-jpn border transition-all text-characters dark:text-dark-characters duration-150 border-decoration flex justify-center items-center bg-background dark:bg-dark-background
+                ${isDecoration && 'bg-decoration!'}
+                ${isGuide && 'bg-contrast-bg dark:bg-dark-contrast-bg text-characters dark:text-dark-characters font-bold'}  
+                ${isSelected && 'bg-primary dark:bg-dark-primary font-bold text-characters dark:text-dark-characters border-characters dark:border-dark-characters -translate-y-2'} 
+                ${isTodo && 'bg-green-200'} `}
         >
             {typeof item === 'object' && item !== null ? (
                 item.label

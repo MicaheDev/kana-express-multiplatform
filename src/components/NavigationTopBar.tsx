@@ -12,14 +12,12 @@ export default function NavigationTopBar({ children, isPrevActive, className }: 
   const navigate = useNavigate();
 
   return (
-    <>
-      <div className="bg-background dark:bg-dark-background h-[20px]"></div>
 
-      <nav className={`h-[70px] bg-background dark:bg-dark-background  border-b border-characters w-full flex justify-between items-center px-3 ${className}`}>
+      <header className="h-[70px] shrink-0 w-full flex px-6 text-characters dark:text-dark-characters border-b border-characters dark:border-dark-characters">
         {isPrevActive && <button onClick={() => navigate(-1)}>
-          <LucideArrowLeft className="text-characters dark:text-dark-characters" />
+          <LucideArrowLeft className="text-characters dark:text-dark-characters w-8 h-8" />
         </button>}
         {children && children}
-      </nav></>
+      </header>
   )
 }
