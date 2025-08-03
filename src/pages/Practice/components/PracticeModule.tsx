@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react"; // Importa useRef
 import { HiraganaCombinationList, HiraganaDakutenList, HiraganaList, KatakanaCombinationList, KatakanaDakutenList, KatakanaList, Modes, Variations } from "../../../data/kana";
+import Scaffold from "../../../components/Scaffold";
+import NavigationTopBar from "../../../components/NavigationTopBar";
 
 interface PracticeModuleProps {
   mode: Modes,
@@ -104,19 +106,21 @@ export default function PracticeModule({ mode, variations, onReset }: PracticeMo
     }
   };
   return (
-    <div className="w-full h-full flex flex-col gap-4 items-center justify-center my-8 mx-auto px-2">
+    <Scaffold topBar={<NavigationTopBar isPrevActive/>}>
 
-      <div className="grid grid-cols-4 row-auto gap-4">
+      <div className="w-full h-full flex flex-col gap-4 items-center justify-center my-8 mx-auto p-2">
+
+      <div className="grid grid-cols-2 row-auto gap-4">
         {
           quizList.map((quiz, index) => (
             <div
               key={quiz.kana}
-              className={`w-[250px] h-[250px] shadow outline outline-gray-700 rounded-2xl gap-4 flex flex-col justify-evenly items-center transition-colors duration-500 ${quiz.hasError ? 'bg-red-200 outline-red-500' : answered.includes(quiz.kana) ? 'bg-green-200 outline-green-500' : ''}`}>
-              <h1 className="text-8xl font-jpn">{quiz.kana}</h1>
+              className={`w-full h-auto p-4 shadow outline outline-gray-700 rounded-2xl gap-4 flex flex-col justify-evenly items-center transition-colors duration-500 ${quiz.hasError ? 'bg-red-200 outline-red-500' : answered.includes(quiz.kana) ? 'bg-green-200 outline-green-500' : ''}`}>
+              <h1 className="text-xl font-jpn">{quiz.kana}</h1>
               <input
                 onKeyDown={(e) => validate(e, quiz, index)}
                 type="text"
-                className="px-4 py-2 w-[200px] text-center font-bold border-b outline-none border-gray-700"
+                className="px-4 py-2 w-full text-center font-bold border-b outline-none border-gray-700"
                 ref={(el: HTMLInputElement) => {
                   inputRefs.current[index] = el;
                 }} />
@@ -127,5 +131,6 @@ export default function PracticeModule({ mode, variations, onReset }: PracticeMo
 
       <button onClick={onReset} className="bg-pink-400">Finalizar</button>
     </div>
+    </Scaffold>
   )
 }

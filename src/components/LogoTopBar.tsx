@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router";
 
 
 export default function LogoTopBar() {
-    const navigate = useNavigate();
 
     return (
         <>

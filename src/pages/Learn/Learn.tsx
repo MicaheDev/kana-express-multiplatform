@@ -2,6 +2,8 @@ import { useState } from "react";
 import { HiraganaList, KatakanaList, Modes } from "../../data/kana";
 import NavigationBottomBar from "../../components/NavigationBottomBar";
 import { useNavigate } from "react-router";
+import Button from "../../components/Button";
+import Scaffold from "../../components/Scaffold";
 
 interface MenuItem {
   label: string;
@@ -32,9 +34,9 @@ export default function Learn() {
 
   return (
 
-    <div className="overflow-hidden w-screen h-screen flex flex-col">
-      <div className="h-[20px] shrink-0"></div>
-      <header className="h-[70px] shrink-0 w-full flex text-characters dark:text-dark-characters border-b border-characters dark:border-dark-characters">
+    <>
+
+      <Scaffold topBar={<header className="h-[70px] shrink-0 w-full flex text-characters dark:text-dark-characters border-b border-characters dark:border-dark-characters">
 
         {modeMenu.map((item) => (
           <label
@@ -59,8 +61,7 @@ export default function Learn() {
             </div>
           </label>
         ))}
-      </header>
-      <div className="grow h-full overflow-y-auto p-6 flex gap-4 flex-col">
+      </header>} bottomBar={<NavigationBottomBar />}>
         <div className="grid grid-rows-10 grid-cols-5 gap-3">
           {kana.map(([key, value]) => (
             <div key={key} className="shadow-up flex flex-col bg-contrast-bg text-characters dark:text-dark-characters dark:bg-dark-contrast-bg justify-center items-center p-2 rounded-xl border border-characters dark:border-dark-characters ">
@@ -71,11 +72,12 @@ export default function Learn() {
 
         </div>
 
-        <button className="btn-primary" onClick={() => navigate(`/learn/${selectedMode}`)}>Comenzar</button>
 
-      </div>
-
-      <NavigationBottomBar />
-    </div>
+        <Button onClick={() => navigate(`/learn/${selectedMode}`)}>
+          Comenzar
+        </Button>
+      </Scaffold>
+   
+    </>
   )
 }

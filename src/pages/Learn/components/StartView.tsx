@@ -1,5 +1,5 @@
-import { MdOutlineFlag } from 'react-icons/md';
 import type { Progress } from '../LearnDetail';
+import Button from '../../../components/Button';
 
 type StartViewProps = {
     kanaType: string | undefined,
@@ -16,14 +16,15 @@ export default function StartView({ kanaType, progress, restart }: StartViewProp
 
             {
                 progress != null && <div className="flex justify-center items-center flex-col">
-                    <h2>Tu puntaje fue de <span className="text-green-500">{progress.progress}%</span></h2>
+                    <h2>Tu progreso fue del <span className="text-green-500">{progress.progress}%</span></h2>
                     <h2>Realizastes {progress.doIt}/{progress.total}</h2>
                 </div>
             }
 
-            <button onClick={restart} className="bg-pink-400 outline outline-gray-700">
-                <span>Empezar sesión</span><MdOutlineFlag className="text-xl" />
-            </button>
+
+            <Button onClick={restart}>
+                Reiniciar
+            </Button>
         </div>
     )
 }

@@ -5,6 +5,8 @@ import Login from '../forms/Login'
 import { BottomSheetProvider } from '../context/BottomSheetContext'
 import { Link } from 'react-router'
 import LogoTopBar from '../components/LogoTopBar'
+import Scaffold from '../components/Scaffold'
+import Button from '../components/Button'
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(false)
@@ -12,9 +14,10 @@ export default function Home() {
 
   return (
     <>
-      <section className='flex flex-col h-full'>
-        <LogoTopBar />
-        <div className='p-6 flex flex-col h-full justify-between'>
+
+
+      <Scaffold topBar={<LogoTopBar />} contentClassName='justify-between'>
+        <>
 
           <div className='flex justify-center flex-col items-center gap-2'>
             <figure className='h-auto w-auto relative overflow-hidden'>
@@ -27,19 +30,17 @@ export default function Home() {
           </div>
 
           <div className='flex flex-col gap-4'>
-            <div className='bg-characters dark:bg-dark-characters w-full rounded-xl'>
-              <button className='bg-primary dark:bg-dark-primary w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-2 hover:translate-y-0 active:translate-y-0 transition-transform duration-150' onClick={() => { setIsLogin(false); setIsRegister(true) }}>Registrarme</button>
-
-            </div>
-            <div className='bg-characters dark:bg-dark-characters w-full rounded-xl'>
-              <button className='bg-background dark:bg-dark-background w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-2 hover:translate-y-0 active:translate-y-0 transition-transform duration-150' 
-              onClick={() => { setIsRegister(false); setIsLogin(true) }}>Iniciar Sesión</button>
-            </div>
+  
+            <Button onClick={() => { setIsLogin(false); setIsRegister(true) }}>
+              Registrarme
+            </Button>
+            <Button variant='secondary' onClick={() => { setIsRegister(false); setIsLogin(true) }}>
+              Iniciar Sesion
+            </Button>
             <Link className='text-center' to={"/learn"}>Omitir</Link>
           </div>
-
-        </div>
-      </section>
+        </>
+      </Scaffold>
 
       <BottomSheet isVisible={isRegister} setIsVisible={setIsRegister} >
         <BottomSheetProvider setIsVisible={setIsRegister}>

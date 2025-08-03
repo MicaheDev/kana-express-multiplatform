@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
             <>
-                <main className="bg-background dark:bg-dark-background h-screen w-screen overflow-hidden">
+                <main id="main" className="bg-background dark:bg-dark-background w-screen overflow-hidden">
                     <Routes>
                         <Route index path="/" element={<Home />} />
                         <Route path="/learn" element={<Learn />} />

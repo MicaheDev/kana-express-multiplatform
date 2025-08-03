@@ -34,29 +34,27 @@
     --font-departure_mono: "Departure Mono";
     --font-jpn: "DotGothic16"
 
-    
+
 }
 
 
 
 :root {
-  --status-bar-height: env(safe-area-inset-top, 0px);
-  --navigation-bar-height: env(safe-area-inset-bottom, 0px);
+    --status-bar-height: env(safe-area-inset-top, 0px);
+    --navigation-bar-height: env(safe-area-inset-bottom, 0px);
 }
 
-body, .bottom-sheet {
-  padding-top: var(--status-bar-height);
-  padding-bottom: var(--navigation-bar-height);
-}
+
 
 /* Si tu menú está abajo, ajústalo así: */
 .bottom-menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding-bottom: var(--navigation-bar-height); /* Para que no se solape con la navigation bar */
-  /* Otros estilos de tu menú */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: var(--navigation-bar-height);
+    /* Para que no se solape con la navigation bar */
+    /* Otros estilos de tu menú */
 }
 
 
@@ -66,12 +64,50 @@ body, .bottom-sheet {
     body {
         @apply bg-background dark:bg-dark-background;
     }
+
+    #main,
+    #bottom-sheet {
+        padding-top: var(--status-bar-height);
+        padding-bottom: var(--navigation-bar-height);
+    }
+
+    #main {
+        height: 100dvh;
+    }
+
+    .select-box.check {
+        @apply bg-characters text-background dark:bg-dark-characters dark:text-dark-background;
+    }
+
+
+    .scaffold {
+        @apply overflow-hidden w-screen h-full flex flex-col;
+
+
+        .scaffold-content {
+            @apply grow h-full overflow-y-auto p-6 flex gap-4 flex-col;
+        }
+
+    }
+
+    #bottom-sheet {
+        @apply fixed flex flex-col bg-background dark:bg-dark-background overflow-hidden w-screen h-screen z-[100] duration-300 transition-transform top-0;
+
+        #bottom-sheet-header {
+            @apply h-[70px] shrink-0 border-b border-characters w-full flex items-center px-3 justify-end;
+        }
+
+        #bottom-sheet-content {
+            @apply grow overflow-y-auto p-6 flex justify-center items-start;
+        }
+    }
+
     .btn-primary {
-        @apply w-full shadow-up bg-primary dark:bg-dark-primary p-4 border border-characters dark:border-dark-characters rounded-xl;
+        @apply bg-primary dark:bg-dark-primary w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-2 hover:translate-y-0 active:translate-y-0 transition-transform duration-150;
     }
 
     .btn-secondary {
-        @apply w-full shadow-up bg-background dark:bg-dark-background p-4 border border-characters dark:border-dark-characters rounded-xl;
+        @apply bg-background dark:bg-dark-background w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-2 hover:translate-y-0 active:translate-y-0 transition-transform duration-150;
     }
 }
 

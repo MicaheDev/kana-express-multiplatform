@@ -13,7 +13,7 @@ export default function NavigationTopBar({ children, isPrevActive, className }: 
 
   return (
 
-      <header className="h-[70px] shrink-0 w-full flex px-6 text-characters dark:text-dark-characters border-b border-characters dark:border-dark-characters">
+      <header className={`h-[70px] shrink-0 w-full flex px-6 text-characters dark:text-dark-characters border-b border-characters dark:border-dark-characters ${className}`}>
         {isPrevActive && <button onClick={() => navigate(-1)}>
           <LucideArrowLeft className="text-characters dark:text-dark-characters w-8 h-8" />
         </button>}
