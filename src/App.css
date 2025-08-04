@@ -132,13 +132,8 @@ h6 {
     @apply font-black text-characters dark:text-dark-characters;
 }
 
-button {
+button,a {
     @apply font-bold text-characters dark:text-dark-characters;
-}
-
-input,
-textarea {
-    @apply bg-contrast-bg dark:bg-dark-contrast-bg text-characters dark:text-dark-characters focus:outline-4 focus:outline-characters dark:focus:outline-dark-characters placeholder:text-characters/80 dark:placeholder:text-dark-characters/80;
 }
 
 

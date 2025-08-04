@@ -6,10 +6,11 @@ import Practice from './pages/Practice/Practice';
 import LearnDetail from './pages/Learn/LearnDetail';
 import "./App.css";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile/Profile";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
+    <React.StrictMode>
+        <BrowserRouter>
             <>
                 <main id="main" className="bg-background dark:bg-dark-background w-screen overflow-hidden">
                     <Routes>
@@ -17,9 +18,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                         <Route path="/learn" element={<Learn />} />
                         <Route path="/learn/:kana" element={<LearnDetail />} />
                         <Route path="/practice" element={<Practice />} />
+                        <Route path="/profile" element={<Profile />} />
+
                     </Routes>
                 </main>
             </>
         </BrowserRouter>
-  </React.StrictMode>,
+    </React.StrictMode>,
 );

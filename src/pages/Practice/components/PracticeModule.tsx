@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from "react"; // Importa useRef
 import { HiraganaCombinationList, HiraganaDakutenList, HiraganaList, KatakanaCombinationList, KatakanaDakutenList, KatakanaList, Modes, Variations } from "../../../data/kana";
 import Scaffold from "../../../components/Scaffold";
 import NavigationTopBar from "../../../components/NavigationTopBar";
+import NavigationBottomBar from "../../../components/NavigationBottomBar";
+import Button from "../../../components/Button";
 
 interface PracticeModuleProps {
   mode: Modes,
@@ -106,31 +108,33 @@ export default function PracticeModule({ mode, variations, onReset }: PracticeMo
     }
   };
   return (
-    <Scaffold topBar={<NavigationTopBar isPrevActive/>}>
+    <Scaffold topBar={<NavigationTopBar isPrevActive />} bottomBar={<NavigationBottomBar />}>
 
-      <div className="w-full h-full flex flex-col gap-4 items-center justify-center my-8 mx-auto p-2">
+      <div className="w-full  flex flex-col gap-8 items-center justify-center my-8 mx-auto p-2">
+        <h1>Escribe el sonido del Caracter</h1>
+        <div className="grid grid-cols-2 row-auto gap-4">
+          {
+            quizList.map((quiz, index) => (
+              <div
+                key={quiz.kana}
+                className={`w-full h-auto p-4 shadow-up text-characters dark:text-dark-characters outline outline-characters dark:outline-dark-characters rounded-2xl gap-4 flex flex-col justify-evenly items-center transition-colors duration-500 ${quiz.hasError ? 'bg-red-300' : answered.includes(quiz.kana) ? 'bg-green-200 dark:bg-green-500 ' : ''}`}>
+                <h1 className="text-4xl font-jpn">{quiz.kana}</h1>
+                <input
+                  onKeyDown={(e) => validate(e, quiz, index)}
+                  type="text"
+                  className="px-4 bg-transparent py-2 w-full text-center font-bold border-b outline-none border-decoration"
+                  ref={(el: HTMLInputElement) => {
+                    inputRefs.current[index] = el;
+                  }} />
+              </div>
+            ))
+          }
+        </div>
 
-      <div className="grid grid-cols-2 row-auto gap-4">
-        {
-          quizList.map((quiz, index) => (
-            <div
-              key={quiz.kana}
-              className={`w-full h-auto p-4 shadow outline outline-gray-700 rounded-2xl gap-4 flex flex-col justify-evenly items-center transition-colors duration-500 ${quiz.hasError ? 'bg-red-200 outline-red-500' : answered.includes(quiz.kana) ? 'bg-green-200 outline-green-500' : ''}`}>
-              <h1 className="text-xl font-jpn">{quiz.kana}</h1>
-              <input
-                onKeyDown={(e) => validate(e, quiz, index)}
-                type="text"
-                className="px-4 py-2 w-full text-center font-bold border-b outline-none border-gray-700"
-                ref={(el: HTMLInputElement) => {
-                  inputRefs.current[index] = el;
-                }} />
-            </div>
-          ))
-        }
+        <Button onClick={onReset}>
+          Finalizar
+        </Button>
       </div>
-
-      <button onClick={onReset} className="bg-pink-400">Finalizar</button>
-    </div>
     </Scaffold>
   )
 }

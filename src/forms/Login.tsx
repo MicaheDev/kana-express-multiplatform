@@ -59,6 +59,13 @@ export default function Login() {
       return
     }
 
+    const userSession = {
+      username: userExist.username,
+      email: userExist.email,
+    }
+
+    localStorage.setItem("session", JSON.stringify(userSession))
+
     navigate("/learn")
     handleCloseLogin()
 

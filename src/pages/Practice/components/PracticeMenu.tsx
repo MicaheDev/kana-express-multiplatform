@@ -1,4 +1,3 @@
-import { MdOutlineFlag } from "react-icons/md";
 import type { Modes } from "../../../data/kana";
 import Scaffold from "../../../components/Scaffold";
 import NavigationBottomBar from "../../../components/NavigationBottomBar";
@@ -61,7 +60,8 @@ export default function PracticeMenu({
                 ))}
             </header>} bottomBar={<NavigationBottomBar />}>
 
-                    <label
+                   <div className="flex flex-col w-full h-full justify-center gap-8">
+                     <label
                         htmlFor="all-kana"
                         className={`select-box w-full outline outline-decoration h-max rounded-2xl hover:scale-95 hover:opacity-80 transition-all duration-300 cursor-pointer ${selectAllVariations ? "check" : "text-decoration"
                             }`}
@@ -108,6 +108,7 @@ export default function PracticeMenu({
                     </div>
 
                     <Button onClick={onStart}>Empezar Practica</Button>
+                   </div>
             </Scaffold>
         </>
     )
