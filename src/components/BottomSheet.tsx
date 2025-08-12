@@ -10,10 +10,11 @@ type BottomSheetProps = {
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>,
     children?: React.ReactNode,
     className?: string,
-    ref?: React.Ref<BottomSheetRef>
+    ref?: React.Ref<BottomSheetRef>,
+    showClose?: boolean
 }
 
-export default function BottomSheet({ isVisible, setIsVisible, children, className, ref }: BottomSheetProps) {
+export default function BottomSheet({ isVisible, setIsVisible, children, className, ref, showClose }: BottomSheetProps) {
 
  // Expone setIsVisible a través de la referencia
     useImperativeHandle(ref, () => ({
@@ -24,9 +25,9 @@ export default function BottomSheet({ isVisible, setIsVisible, children, classNa
         <div id="bottom-sheet" className={`${isVisible ? "translate-y-0" : "translate-y-full"}`}>
 
             <header id="bottom-sheet-header">
-                <button onClick={() => setIsVisible(false)}>
+                {showClose && <button onClick={() => setIsVisible(false)}>
                     <LucideX className="w-8 h-8 text-characters dark:text-dark-characters" />
-                </button>
+                </button>}
             </header>
 
             <div id="bottom-sheet-content" className={`${className ? className : ""}`}>

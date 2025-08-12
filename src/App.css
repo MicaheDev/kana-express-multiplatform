@@ -106,9 +106,18 @@
         @apply bg-primary dark:bg-dark-primary w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-2 hover:translate-y-0 active:translate-y-0 transition-transform duration-150;
     }
 
+    .btn-s-primary {
+        @apply bg-primary dark:bg-dark-primary w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-1 hover:translate-y-0 active:translate-y-0 transition-transform duration-150;
+    }
+
     .btn-secondary {
         @apply bg-background dark:bg-dark-background w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-2 hover:translate-y-0 active:translate-y-0 transition-transform duration-150;
     }
+
+      .btn-s-secondary {
+        @apply bg-background dark:bg-dark-background w-full h-full p-4 rounded-xl border border-characters dark:border-dark-characters -translate-y-1 hover:translate-y-0 active:translate-y-0 transition-transform duration-150;
+    }
+
 }
 
 @utility shadow-up {

@@ -48,7 +48,7 @@ export default function NavigationBottomBar({ className }: NavigationBarProps) {
 
       >
         {({ isActive }) => (
-          <span className={isActive ? "btn-primary px-6!" : "btn-secondary  px-6!"}>
+          <span className={isActive ? "btn-s-primary px-6!" : "btn-s-secondary px-6!"}>
             <House className="w-6 h-6" />
           </span>
         )}
@@ -63,7 +63,7 @@ export default function NavigationBottomBar({ className }: NavigationBarProps) {
 
       >
         {({ isActive }) => (
-          <span className={isActive ? "btn-primary px-6!" : "btn-secondary  px-6!"}>
+          <span className={isActive ? "btn-s-primary px-6!" : "btn-s-secondary px-6!"}>
             <GraduationCap className="w-6 h-6" />
           </span>
         )}
@@ -77,7 +77,7 @@ export default function NavigationBottomBar({ className }: NavigationBarProps) {
 
       >
         {({ isActive }) => (
-          <span className={isActive ? "btn-primary px-6!" : "btn-secondary  px-6!"}>
+          <span className={isActive ? "btn-s-primary px-6!" : "btn-s-secondary px-6!"}>
             <Dumbbell className="w-6 h-6" />
           </span>
         )}
@@ -91,7 +91,7 @@ export default function NavigationBottomBar({ className }: NavigationBarProps) {
 
       >
         {({ isActive }) => (
-          <span className={isActive ? "btn-primary px-6!" : "btn-secondary  px-6!"}>
+          <span className={isActive ? "btn--sprimary px-6!" : "btn-s-secondary px-6!"}>
             <UserPen className="w-6 h-6" />
           </span>
         )}

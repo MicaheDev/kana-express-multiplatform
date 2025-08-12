@@ -80,11 +80,7 @@ export default function LearnDetail() {
     }, [selectedCol, selectedRow, kana]); // Added kana to dependency array for completeness
 
  
-   const playSound = () => {
-        if (audio) {
-            audio.play().catch(error => console.error("Error playing audio:", error));
-        }
-    }
+  
 
     const verifyKana = () => {
         const currentKana = kana[selectedRow]?.[selectedCol];
@@ -309,7 +305,7 @@ function navigateToKana(row: number, col: number) {
                 </>
             </Scaffold>
 
-            <BottomSheet isVisible={showProgress} setIsVisible={setShowProgress}>
+            <BottomSheet isVisible={showProgress} setIsVisible={setShowProgress} showClose={false}>
                 <StartView progress={progress} kanaType={kanaType} restart={restart} />
             </BottomSheet>
 

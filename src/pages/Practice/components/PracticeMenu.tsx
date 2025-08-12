@@ -2,6 +2,7 @@ import type { Modes } from "../../../data/kana";
 import Scaffold from "../../../components/Scaffold";
 import NavigationBottomBar from "../../../components/NavigationBottomBar";
 import Button from "../../../components/Button";
+import { createSearchParams, useNavigate } from "react-router";
 
 interface MenuItem {
     label: string;
@@ -9,7 +10,6 @@ interface MenuItem {
 }
 
 interface PracticeMenuProps {
-    onStart: () => void
     modeMenu: MenuItem[],
     selectedMode: string,
     setSelectedMode: React.Dispatch<React.SetStateAction<Modes>>,
@@ -21,7 +21,6 @@ interface PracticeMenuProps {
 }
 
 export default function PracticeMenu({
-    onStart,
     modeMenu,
     selectedMode,
     setSelectedMode,
@@ -31,6 +30,7 @@ export default function PracticeMenu({
     selectAllVariations,
     variationsMenu,
 }: PracticeMenuProps) {
+    const navigate = useNavigate()
     return (
         <>
             <Scaffold topBar={<header className="h-[70px] shrink-0 w-full flex text-characters dark:text-dark-characters border-b border-characters dark:border-dark-characters">
@@ -60,10 +60,11 @@ export default function PracticeMenu({
                 ))}
             </header>} bottomBar={<NavigationBottomBar />}>
 
-                   <div className="flex flex-col w-full h-full justify-center gap-8">
-                     <label
+                <div className="flex flex-col w-full h-full justify-center gap-8">
+                    <h1 className="text-center text-xl">Selecciona una variante</h1>
+                    <label
                         htmlFor="all-kana"
-                        className={`select-box w-full outline outline-decoration h-max rounded-2xl hover:scale-95 hover:opacity-80 transition-all duration-300 cursor-pointer ${selectAllVariations ? "check" : "text-decoration"
+                        className={`select-box w-full outline outline-decoration h-max rounded-2xl transition-all duration-300 cursor-pointer ${selectAllVariations ? "check" : "text-decoration"
                             }`}
                     >
                         <input
@@ -75,7 +76,7 @@ export default function PracticeMenu({
                             onChange={(e) => setSelectAllVariations(e.currentTarget.checked)}
                         />
                         <div className="flex justify-center items-center w-full h-full py-6 px-8">
-                            <p className="uppercase font-bold w-full text-center text-2xl">
+                            <p className="font-bold w-full text-center ">
                                 Todos los kana
                             </p>
                         </div>
@@ -86,7 +87,7 @@ export default function PracticeMenu({
                             <label
                                 key={`${item.label}`}
                                 htmlFor={item.name}
-                                className={`select-box w-full outline outline-decoration h-max rounded-2xl hover:scale-95 hover:opacity-80 transition-all duration-300 cursor-pointer ${selectedVariations.includes(item.name) ? "check" : "text-decoration"
+                                className={`select-box w-full outline outline-decoration h-max rounded-2xl transition-all duration-300 cursor-pointer ${selectedVariations.includes(item.name) ? "check" : "text-decoration"
                                     }`}
                             >
                                 <input
@@ -99,7 +100,7 @@ export default function PracticeMenu({
                                     onChange={() => onVariationChange(item.name)}
                                 />
                                 <div className="flex justify-center items-center w-full h-full py-6 px-8">
-                                    <p className="uppercase font-bold w-full text-center text-xl">
+                                    <p className="font-bold w-full text-center">
                                         {item.label}
                                     </p>
                                 </div>
@@ -107,8 +108,21 @@ export default function PracticeMenu({
                         ))}
                     </div>
 
-                    <Button onClick={onStart}>Empezar Practica</Button>
-                   </div>
+                    <Button onClick={
+                        () => {
+                            if (selectedVariations.length < 1) {
+                                alert("Por favor selecciona una variación")
+                                return;
+                            }
+                            const params = createSearchParams({
+                                variations: selectedVariations,
+                            })
+                            navigate({
+                                pathname: `/practice/${selectedMode}`,
+                                search: `?${params.toString()}`
+                            })
+                        }}>Empezar Practica</Button>
+                </div>
             </Scaffold>
         </>
     )

@@ -62,7 +62,8 @@ export default function Learn() {
           </label>
         ))}
       </header>} bottomBar={<NavigationBottomBar />}>
-        <div className="grid grid-rows-10 grid-cols-5 gap-3">
+       <div className="flex flex-col gap-6">
+         <div className="grid grid-rows-10 grid-cols-5 gap-3">
           {kana.map(([key, value]) => (
             <div key={key} className="shadow-up flex flex-col bg-contrast-bg text-characters dark:text-dark-characters dark:bg-dark-contrast-bg justify-center items-center p-2 rounded-xl border border-characters dark:border-dark-characters ">
               <h3 className="text-lg">{key}</h3>
@@ -76,6 +77,7 @@ export default function Learn() {
         <Button onClick={() => navigate(`/learn/${selectedMode}`)}>
           Comenzar
         </Button>
+       </div>
       </Scaffold>
    
     </>

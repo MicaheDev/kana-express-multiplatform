@@ -1,140 +1,221 @@
-import { useEffect, useState, useRef } from "react"; // Importa useRef
-import { HiraganaCombinationList, HiraganaDakutenList, HiraganaList, KatakanaCombinationList, KatakanaDakutenList, KatakanaList, Modes, Variations } from "../../../data/kana";
+import { useCallback, useEffect, useState } from "react"; // Importa useRef
+import { HiraganaCombinationList, HiraganaDakutenList, HiraganaList, KatakanaCombinationList, KatakanaDakutenList, KatakanaList, Variations } from "../../../data/kana";
 import Scaffold from "../../../components/Scaffold";
 import NavigationTopBar from "../../../components/NavigationTopBar";
 import NavigationBottomBar from "../../../components/NavigationBottomBar";
 import Button from "../../../components/Button";
+import { useNavigate, useParams, useSearchParams } from "react-router";
+import { LoaderCircle } from "lucide-react";
+import BottomSheet from "../../../components/BottomSheet";
 
-interface PracticeModuleProps {
-  mode: Modes,
-  variations: string[],
-  onReset: () => void
-}
 
 type QuizItem = {
   kana: string;
   romaji: string;
-  hasError: boolean;
+
 };
 
-export default function PracticeModule({ mode, variations, onReset }: PracticeModuleProps) {
-  const Quizes = {
-    hiragana: {
-      [Variations.mainKana]: HiraganaList,
-      [Variations.dakutenKana]: HiraganaDakutenList,
-      [Variations.combinationKana]: HiraganaCombinationList,
-    },
-    katakana: {
-      [Variations.mainKana]: KatakanaList,
-      [Variations.dakutenKana]: KatakanaDakutenList,
-      [Variations.combinationKana]: KatakanaCombinationList,
-    },
-  };
+const Quizes = {
+  hiragana: {
+    [Variations.mainKana]: HiraganaList,
+    [Variations.dakutenKana]: HiraganaDakutenList,
+    [Variations.combinationKana]: HiraganaCombinationList,
+  },
+  katakana: {
+    [Variations.mainKana]: KatakanaList,
+    [Variations.dakutenKana]: KatakanaDakutenList,
+    [Variations.combinationKana]: KatakanaCombinationList,
+  },
+};
+
+
+export default function PracticeModule() {
+  let { kana } = useParams<{ kana: string }>();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate()
+
+  const variations = searchParams.getAll("variations");
+
   const [quizList, setQuizList] = useState<QuizItem[]>([]);
-  const [progress, setProgress] = useState<number>(0);
-  const [errorCount, setErrorCount] = useState<number>(0);
-  const [answered, setAnswered] = useState<string[]>([]);
+  const [selectedChar, setSelectedChar] = useState<QuizItem | null>(null);
+  const [input, setInput] = useState("")
+  const [current, setCurrent] = useState(0)
 
-  // Array de refs para los inputs
-  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [isWrong, setIsWrong] = useState(false)
 
-  console.log(progress)
+  const [mistakes, setMistakes] = useState(0)
+  const [wrongCharacters, setWrongCharacters] = useState<Set<string>>(new Set());
 
+  const [isComplete, setIsComplete] = useState(false)
+
+
+  const [average, setAverage] = useState(0)
+
+  // Reemplaza el useEffect principal con esto:
   useEffect(() => {
-    setQuizList([]);
-    setAnswered([]);
-    setErrorCount(0);
-    setProgress(0);
-    const newQuizList: QuizItem[] = [];
+    const initialize = () => {
+      const newQuizList: QuizItem[] = [];
 
-    variations.forEach((variation) => {
-      const kanaMap = Quizes[mode][variation as Variations];
-      if (kanaMap) {
-        Object.entries(kanaMap).forEach(([kana, romaji]) => {
-          newQuizList.push({ kana, romaji, hasError: false });
-        });
-      }
-    });
+      const newMode = kana === "hiragana" ? "hiragana" : "katakana"
 
-    const shuffledList = [...newQuizList].sort(() => Math.random() - 0.5);
-    setQuizList(shuffledList);
-    // Reinicia las referencias cuando la quizList cambie
-    inputRefs.current = new Array(shuffledList.length).fill(null);
-  }, [mode, variations]);
-
-  const validate = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    quizItem: QuizItem,
-    index: number
-  ) => {
-    if (e.nativeEvent.key === 'Enter') {
-      const inputValue = e.currentTarget.value.trim().toLowerCase();
-      const isCorrect = inputValue === quizItem.romaji;
-
-      const updatedQuizList = [...quizList];
-      const updatedAnswered = [...answered];
-      let newErrorCount = errorCount;
-
-      if (isCorrect) {
-        if (!answered.includes(quizItem.kana)) {
-          updatedAnswered.push(quizItem.kana);
-          setAnswered(updatedAnswered);
-          setProgress(prev => prev + 1); // Incrementa el progreso
+      variations.forEach((variation) => {
+        const kanaMap = Quizes[newMode][variation as Variations];
+        if (kanaMap) {
+          Object.entries(kanaMap).forEach(([kana, romaji]) => {
+            newQuizList.push({ kana, romaji });
+          });
         }
-        updatedQuizList[index].hasError = false;
-        setQuizList(updatedQuizList);
+      });
 
-        // Mueve el foco al siguiente input
-        if (inputRefs.current[index + 1]) {
-          inputRefs.current[index + 1]?.focus();
-        } else {
-          // Si no hay más inputs, puedes decidir qué hacer, por ejemplo, resetear o enfocar el primero
-          // inputRefs.current[0]?.focus();
-        }
+      const shuffledList = [...newQuizList].sort(() => Math.random() - 0.5);
+      setQuizList(shuffledList);
+      setSelectedChar(shuffledList[current]);
+    };
 
-      } else {
-        updatedQuizList[index].hasError = true;
-        setQuizList(updatedQuizList);
-        if (!answered.includes(quizItem.kana) && !updatedAnswered.includes(quizItem.kana)) {
-          newErrorCount++;
-          setErrorCount(newErrorCount);
-        }
-        setTimeout(() => {
-          const resetQuizList = [...quizList];
-          resetQuizList[index].hasError = false;
-          setQuizList(resetQuizList);
-        }, 1000);
+    const timer = setTimeout(initialize, 100); // Pequeño delay para evitar bucles
+    return () => clearTimeout(timer);
+  }, []); // Solo al montar
+
+  const calculateAverage = useCallback(() => {
+    if (quizList.length === 0) {
+      setAverage(0);
+      return;
+    }
+    // Caracteres que no han registrado ningún error único
+    const charactersNotErrored = quizList.length - mistakes;
+    // Calcula el porcentaje de acierto
+    const currentAverage = (charactersNotErrored / quizList.length) * 100;
+    setAverage(parseFloat(currentAverage.toFixed(2))); // Redondea a 2 decimales
+  }, [mistakes, quizList.length]); // Dependencias: recalcular si cambian los errores o el tamaño de la lista
+
+  function handleNext() {
+    if (current >= (quizList.length - 1)) {
+      setSelectedChar(quizList[0])
+      setCurrent(0)
+      calculateAverage()
+      setIsComplete(true)
+      return
+    }
+
+    let newCurrent = quizList[current + 1]
+    setSelectedChar(newCurrent)
+    setCurrent(current + 1)
+    setInput("")
+
+
+    setIsSuccess(false)
+    setIsWrong(false)
+
+
+  }
+
+  function verify() {
+
+    setIsWrong(false)
+
+    const match = quizList.find((char) =>
+      char.kana === selectedChar?.kana
+    )
+
+    if (!match) {
+      return
+    }
+
+    if (match.romaji.toLowerCase() === input.toLowerCase()) {
+      setIsSuccess(true)
+
+      setTimeout(() => {
+        handleNext()
+      }, 500)
+    } else {
+      setIsWrong(true)
+      // Si el carácter actual no ha registrado un error antes, lo añadimos al contador.
+      if (selectedChar && !wrongCharacters.has(selectedChar.kana)) {
+        setMistakes((prevMistakes) => prevMistakes + 1);
+        setWrongCharacters((prevSet) => new Set(prevSet).add(selectedChar.kana));
       }
     }
+
+  }
+
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      verify();
+    }
   };
+
+
+  const getProgressImage = (currentProgress: number) => {
+    if (currentProgress >= 50) {
+      return {
+        src: "/gifs/omedeto.gif", // Felicidades
+        alt: "Felicidades",
+        message: "おめでとう",
+        subMessage: "(¡felicidades!)"
+      };
+    } else if (currentProgress >= 21) {
+      // Puedes cambiar esta imagen y mensaje a algo que represente progreso medio
+      return {
+        src: "/sad.webp", // Por ejemplo, para progreso bajo
+        alt: "Esfuerzate un poco mas",
+        message: "がんばれ", // Ganbarou (¡Hagámoslo!)
+        subMessage: "(¡Esfuerzate un poco mas!)"
+      };
+    } else {
+      // Puedes cambiar esta imagen y mensaje a algo que represente progreso inicial o bajo
+      return {
+        src: "/gifs/damn.gif",
+        alt: "Sigue practicando",
+        message: "バカじゃないの？",
+        subMessage: "¿Eres tonto?"
+      };
+    }
+  };
+
+  const progressInfo = getProgressImage(average);
+
   return (
-    <Scaffold topBar={<NavigationTopBar isPrevActive />} bottomBar={<NavigationBottomBar />}>
+    <>
+      <Scaffold topBar={<NavigationTopBar isPrevActive />} bottomBar={<NavigationBottomBar />}>
 
-      <div className="w-full  flex flex-col gap-8 items-center justify-center my-8 mx-auto p-2">
-        <h1>Escribe el sonido del Caracter</h1>
-        <div className="grid grid-cols-2 row-auto gap-4">
-          {
-            quizList.map((quiz, index) => (
-              <div
-                key={quiz.kana}
-                className={`w-full h-auto p-4 shadow-up text-characters dark:text-dark-characters outline outline-characters dark:outline-dark-characters rounded-2xl gap-4 flex flex-col justify-evenly items-center transition-colors duration-500 ${quiz.hasError ? 'bg-red-300' : answered.includes(quiz.kana) ? 'bg-green-200 dark:bg-green-500 ' : ''}`}>
-                <h1 className="text-4xl font-jpn">{quiz.kana}</h1>
-                <input
-                  onKeyDown={(e) => validate(e, quiz, index)}
-                  type="text"
-                  className="px-4 bg-transparent py-2 w-full text-center font-bold border-b outline-none border-decoration"
-                  ref={(el: HTMLInputElement) => {
-                    inputRefs.current[index] = el;
-                  }} />
-              </div>
-            ))
-          }
+        <div className="flex flex-col gap-8 w-full h-full justify-center">
+          <div className={`w-full h-1/2 flex justify-center min-h-[300px] transition-all duration-300 items-center border border-characters rounded-2xl shadow-up text-characters dark:text-dark-characters dark:border-dark-characters bg-contrast-bg dark:bg-dark-contrast-bg ${isSuccess ? "bg-green-300! dark:bg-green-500!" : ""} ${isWrong ? "bg-red-300! dark:bg-red-500!" : ""}`}>
+            <h2 className="text-center text-[180px] font-jpn">{selectedChar?.kana || <LoaderCircle className="animate-spin w-10 h-10" />}</h2>
+          </div>
+
+          <input value={input} onChange={(e) => { setInput(e.target.value) }}
+            onKeyDown={handleKeyUp}
+            placeholder="romaji" type="text" className="px-6 py-2 border-b border-b-characters dark:border-b-dark-characters outline-none text-2xl text-center" />
+          <Button onClick={verify}>Validar</Button>
+          <p className="text-center">fallos: {mistakes}</p>
         </div>
+      </Scaffold>
 
-        <Button onClick={onReset}>
-          Finalizar
-        </Button>
-      </div>
-    </Scaffold>
+      <BottomSheet isVisible={isComplete} setIsVisible={setIsComplete} showClose={false}>
+        <div className="w-full h-full flex flex-col justify-center items-center gap-6">
+
+          {progressInfo && (
+            <div className="relative">
+              <img src={progressInfo.src} className="rounded-xl object-cover min-h-[250px]" alt={progressInfo.alt} />
+              <div className="absolute bottom-1 inset-x-0 mx-0">
+                <h1 className="text-white! text-center mx-auto text-nowrap">{progressInfo.message}</h1>
+                <p className="text-white! text-center text-nowrap font-sans bg-black w-min mx-auto">{progressInfo.subMessage}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col items-center">      <h2>Tu progreso fue del <span className="text-green-500">{average}%</span></h2>
+            <h2>Realizastes {quizList.length - mistakes}/{quizList.length}</h2>
+
+          </div>
+          <Button onClick={() => { navigate("/practice"); setIsComplete(false) }}>
+            Volver
+          </Button>
+        </div>
+      </BottomSheet>
+    </>
   )
 }
+
+

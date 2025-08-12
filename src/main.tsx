@@ -7,6 +7,7 @@ import LearnDetail from './pages/Learn/LearnDetail';
 import "./App.css";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile/Profile";
+import PracticeModule from "./pages/Practice/components/PracticeModule";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                         <Route path="/learn" element={<Learn />} />
                         <Route path="/learn/:kana" element={<LearnDetail />} />
                         <Route path="/practice" element={<Practice />} />
+                        <Route path="/practice/:kana" element={<PracticeModule />} />
                         <Route path="/profile" element={<Profile />} />
 
                     </Routes>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Modes } from "../../data/kana";
 import PracticeMenu from "./components/PracticeMenu";
-import PracticeModule from "./components/PracticeModule";
 
 interface MenuItem {
   label: string;
@@ -29,7 +28,6 @@ const initialVariationMenu: KanaVariation[] = [
 ];
 
 export default function Practice() {
-  const [isStarted, setIsStarted] = useState(false)
   const [selectedMode, setSelectedMode] = useState<Modes>(Modes.hiragana);
   const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
   const [selectAllVariations, setSelectAllVariations] = useState<boolean>(false);
@@ -60,40 +58,23 @@ export default function Practice() {
     }
   };
 
-  const handleReset = () => {
-    setIsStarted(false)
-    setSelectedVariations([])
-    setSelectAllVariations(false)
-  }
-
-  const handleStart =() => {
-    if(selectedVariations.length < 1){
-      alert("Por favor selecciona una variación")
-      return;
-    }
-
-    setIsStarted(true)
-  }
 
 
 
   return (
     <>
-      {
-        !isStarted
-          ? <PracticeMenu
-          onStart={handleStart}
-            modeMenu={modeMenu}
-            selectedMode={selectedMode}
-            setSelectedMode={setSelectedMode}
-            selectedVariations={selectedVariations}
-            onVariationChange={handleVariationChange}
-            selectAllVariations={selectAllVariations}
-            setSelectAllVariations={setSelectAllVariations}
-            variationsMenu={variationsMenu}
-          />
-          : <PracticeModule mode={selectedMode} variations={selectedVariations} onReset={handleReset} />
-      }
+
+      <PracticeMenu
+        modeMenu={modeMenu}
+        selectedMode={selectedMode}
+        setSelectedMode={setSelectedMode}
+        selectedVariations={selectedVariations}
+        onVariationChange={handleVariationChange}
+        selectAllVariations={selectAllVariations}
+        setSelectAllVariations={setSelectAllVariations}
+        variationsMenu={variationsMenu}
+      />
+
     </>
   );
 }
