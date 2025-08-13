@@ -94,7 +94,7 @@
         @apply fixed flex flex-col bg-background dark:bg-dark-background overflow-hidden w-screen h-screen z-[100] duration-300 transition-transform top-0;
 
         #bottom-sheet-header {
-            @apply h-[70px] shrink-0 border-b border-characters w-full flex items-center px-3 justify-end;
+            @apply h-[70px] shrink-0 border-b border-characters w-full flex items-center px-6 justify-end;
         }
 
         #bottom-sheet-content {
