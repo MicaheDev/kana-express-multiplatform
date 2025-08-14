@@ -22,7 +22,7 @@ const Board = forwardRef<BoardRef, { children?: ReactNode }>(({ children }, ref)
 
     return (
         <>
-            <div className="outline outline-characters dark:outline-dark-characters grow w-full h-full select-none relative rounded-2xl overflow-hidden bg-contrast dark:bg-dark-contrast-bg">
+            <div id="board" className="outline outline-characters dark:outline-dark-characters grow w-full h-full select-none relative rounded-2xl overflow-hidden bg-contrast dark:bg-dark-contrast-bg">
 
                 <div className="h-[70px] w-full border-b" />
                 <canvas
@@ -34,10 +34,10 @@ const Board = forwardRef<BoardRef, { children?: ReactNode }>(({ children }, ref)
                 ></canvas>
 
 
-                <div className="absolute bottom-2 left-2">Trazos: {strokesRef.current}</div>
+                <div className="absolute bottom-2 left-2" id="strokes">Trazos: {strokesRef.current}</div>
 
 
-                <div className='bg-characters dark:bg-dark-characters  rounded-xl absolute top-4 right-2'>
+                <div className='bg-characters dark:bg-dark-characters  rounded-xl absolute top-4 right-2' id="eraser">
                     <button className='bg-background dark:bg-dark-background  h-full p-3 rounded-xl border border-characters dark:border-dark-characters -translate-y-1.5 hover:translate-y-0 active:translate-y-0 transition-transform duration-150'
                         onClick={clearCanvas}>
                         <LuEraser />
@@ -46,7 +46,7 @@ const Board = forwardRef<BoardRef, { children?: ReactNode }>(({ children }, ref)
 
 
                 <div className="absolute top-4 left-2 inline-flex gap-2 items-center">
-                    <div className='bg-characters dark:bg-dark-characters rounded-xl'>
+                    <div className='bg-characters dark:bg-dark-characters rounded-xl' id="undo">
 
                         <button onClick={undo}
                             disabled={historyIndex <= 0}
@@ -54,7 +54,7 @@ const Board = forwardRef<BoardRef, { children?: ReactNode }>(({ children }, ref)
                             <LuUndo2 />
                         </button>
                     </div>
-                    <div className='bg-characters dark:bg-dark-characters rounded-xl'>
+                    <div className='bg-characters dark:bg-dark-characters rounded-xl' id="redo">
 
                         <button onClick={redo}
                             disabled={historyIndex >= history.length - 1}

@@ -1,24 +1,23 @@
-import { useEffect, useState } from "react";
-import BottomSheet from "../components/BottomSheet";
-import SignUp from "../forms/SignUp";
-import Login from "../forms/Login";
-import { BottomSheetProvider } from "../context/BottomSheetContext";
-import { Link, useNavigate } from "react-router";
+import {  useNavigate } from "react-router";
 import LogoTopBar from "../components/LogoTopBar";
 import Scaffold from "../components/Scaffold";
 import Button from "../components/Button";
 
+/*
 interface User {
   username: string;
   email: string;
   password: string;
 }
+*/
 
 export default function Home() {
-  const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false);
-  const [error, setError] = useState<string | null>(null); // Para mostrar mensajes de error
+  const navigate = useNavigate()
+  //const [isLogin, setIsLogin] = useState(false);
+  //const [isRegister, setIsRegister] = useState(false);
+  //const [error, setError] = useState<string | null>(null); // Para mostrar mensajes de error
 
+  /*
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,6 +68,7 @@ export default function Home() {
     console.log(error);
   });
 
+*/
   return (
     <>
       <Scaffold topBar={<LogoTopBar />} contentClassName="justify-between">
@@ -89,6 +89,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-4">
+            {/*
             <Button
               onClick={() => {
                 setIsLogin(false);
@@ -106,14 +107,27 @@ export default function Home() {
             >
               Iniciar Sesion
             </Button>
+
             <Link className="text-center" to={"/learn"}>
               Omitir
             </Link>
+            */}
+            
+
+            <Button
+             
+              onClick={() => {
+                navigate("/learn");
+              }}
+            >
+              Comenzar
+            </Button>
           </div>
         </>
       </Scaffold>
 
-      <BottomSheet
+      {/*
+       <BottomSheet
         isVisible={isRegister}
         setIsVisible={setIsRegister}
         showClose
@@ -128,6 +142,7 @@ export default function Home() {
           <Login />
         </BottomSheetProvider>
       </BottomSheet>
+    */}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"; // Importa useRef
+import { useEffect, useRef, useState } from "react"; // Importa useRef
 import {
   HiraganaCombinationList,
   HiraganaDakutenList,
@@ -13,8 +13,9 @@ import NavigationTopBar from "../../../components/NavigationTopBar";
 import NavigationBottomBar from "../../../components/NavigationBottomBar";
 import Button from "../../../components/Button";
 import { useNavigate, useParams, useSearchParams } from "react-router";
-import { LoaderCircle } from "lucide-react";
+import { ArrowRight, LoaderCircle } from "lucide-react";
 import BottomSheet from "../../../components/BottomSheet";
+import { driver } from "driver.js";
 
 type QuizItem = {
   kana: string;
@@ -35,6 +36,65 @@ const Quizes = {
 };
 
 export default function PracticeModule() {
+  const practice2 = driver({
+    showProgress: true,
+    smoothScroll: true, // Habilita el scroll suave para una mejor experiencia
+    onCloseClick: () => {
+      const tutorial = true;
+      localStorage.setItem("practice2", JSON.stringify(tutorial));
+      practice2.destroy();
+    },
+
+    steps: [
+      {
+        element: "#char",
+        popover: {
+          title: "El carácter a adivinar",
+          description:
+            "En esta sección, se muestra el **carácter del silabario** que debes identificar y escribir su romanización.",
+          side: "right",
+          align: "start",
+        },
+      },
+      {
+        element: "#input",
+        popover: {
+          title: "Escribe la respuesta",
+          description:
+            "Usa este campo para escribir la romanización del carácter mostrado. Por ejemplo, si ves el carácter **あ**, escribe **'a'**. Si ves **た**, escribe **'ta'**.",
+          side: "right",
+          align: "start",
+        },
+      },
+      {
+        element: "#verify",
+        popover: {
+          title: "Verificar respuesta",
+          description:
+            "Una vez que hayas escrito tu respuesta, haz clic en este botón para **verificar si es correcta**. Recibirás un feedback instantáneo.",
+          side: "right",
+          align: "start",
+        },
+      },
+      {
+        element: "#avoid",
+        popover: {
+          onNextClick: () => {
+            const tutorial = true;
+            localStorage.setItem("practice2", JSON.stringify(tutorial));
+
+            practice2.destroy();
+          },
+          title: "Saltar pregunta",
+          description:
+            "Si no conoces la respuesta, puedes hacer clic aquí para **saltar la pregunta**. Ten en cuenta que esto se contará como un **error** en tu puntuación.",
+          side: "right",
+          align: "start",
+        },
+      },
+    ],
+  });
+
   let { kana } = useParams<{ kana: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -61,8 +121,34 @@ export default function PracticeModule() {
 
   const [average, setAverage] = useState<number | null>(null);
 
+  useEffect(() => {
+    // Obtener el valor de localStorage
+    const data = localStorage.getItem("practice2");
+    let tutorialHasBeenShown = false;
 
-  // Reemplaza el useEffect principal con esto:
+    try {
+      if (data) {
+        // Asume que si el valor existe, ya se ha mostrado
+        tutorialHasBeenShown = JSON.parse(data);
+      }
+    } catch (error) {
+      console.error("Error al parsear localStorage 'practice2'", error);
+      // En caso de error, trata el tutorial como no mostrado para que se ejecute una vez
+      tutorialHasBeenShown = false;
+    }
+
+    // Si el tutorial NO se ha mostrado, inicia el tour
+    if (!tutorialHasBeenShown) {
+      practice2.drive();
+      // Y guarda el estado para que no se vuelva a mostrar
+    }
+
+    // El return del useEffect para la limpieza debe estar fuera del if
+    return () => {
+      practice2.destroy();
+    };
+  }, []);
+
   useEffect(() => {
     const initialize = () => {
       const newQuizList: QuizItem[] = [];
@@ -85,25 +171,23 @@ export default function PracticeModule() {
 
     const timer = setTimeout(initialize, 100); // Pequeño delay para evitar bucles
     return () => clearTimeout(timer);
-  }, []); // Solo al montar
+  }, []);
 
-  const calculateAverage = useCallback(() => {
-    if (quizList.length === 0) {
-      setAverage(0);
-      return;
+  useEffect(() => {
+    if (isComplete) {
+      if (quizList.length === 0) {
+        setAverage(0);
+        return;
+      }
+      // El cálculo ahora usa el estado final de 'mistakes'
+      const charactersNotErrored = quizList.length - mistakes;
+      const currentAverage = (charactersNotErrored / quizList.length) * 100;
+      setAverage(parseFloat(currentAverage.toFixed(2)));
     }
-    // Caracteres que no han registrado ningún error único
-    const charactersNotErrored = quizList.length - mistakes;
-    // Calcula el porcentaje de acierto
-    const currentAverage = (charactersNotErrored / quizList.length) * 100;
-    setAverage(parseFloat(currentAverage.toFixed(2))); // Redondea a 2 decimales
-  }, [mistakes, quizList.length]); // Dependencias: recalcular si cambian los errores o el tamaño de la lista
+  }, [isComplete, mistakes, quizList.length]);
 
   function handleNext() {
     if (current >= quizList.length - 1) {
-      setSelectedChar(quizList[0]);
-      setCurrent(0);
-      calculateAverage();
       setIsComplete(true);
       return;
     }
@@ -150,6 +234,20 @@ export default function PracticeModule() {
         );
       }
     }
+  }
+
+  function handleAvoid() {
+    if (wrongRef.current) {
+      wrongRef.current.currentTime = 0;
+      wrongRef.current.play();
+    }
+
+    if (selectedChar && !wrongCharacters.has(selectedChar.kana)) {
+      setMistakes((prevMistakes) => prevMistakes + 1);
+      setWrongCharacters((prevSet) => new Set(prevSet).add(selectedChar.kana));
+    }
+
+    handleNext();
   }
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -199,7 +297,7 @@ export default function PracticeModule() {
               isSuccess ? "bg-green-300! dark:bg-green-500!" : ""
             } ${isWrong ? "bg-red-300! dark:bg-red-500!" : ""}`}
           >
-            <h2 className="text-center text-[180px] font-jpn">
+            <h2 className="text-center text-9xl font-jpn" id="char">
               {selectedChar?.kana || (
                 <LoaderCircle className="animate-spin w-10 h-10" />
               )}
@@ -207,17 +305,26 @@ export default function PracticeModule() {
           </div>
 
           <input
+            id="input"
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
             }}
             onKeyDown={handleKeyUp}
-            placeholder="romaji"
+            placeholder="introduce el kana"
             type="text"
             className="px-6 py-2 border-b border-b-characters dark:border-b-dark-characters outline-none text-2xl text-center"
           />
-          <Button onClick={verify}>Validar</Button>
           <p className="text-center">fallos: {mistakes}</p>
+
+          <div className="flex gap-4">
+            <Button id="verify" className="w-full" onClick={verify}>
+              Validar
+            </Button>
+            <Button id="avoid" variant="secondary" onClick={handleAvoid}>
+              <ArrowRight />
+            </Button>
+          </div>
 
           <div className="hidden">
             <audio src="/success.mp3" ref={successRef} />

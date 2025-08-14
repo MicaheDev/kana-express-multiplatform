@@ -6,7 +6,7 @@ export default function LogoTopBar() {
       >
         <div className="w-full h-full flex justify-center gap-2 items-center">
           <img className="w-[40px] h-[40px]" src="/vite.svg" alt="logo" />
-          <h1 className="text-2xl">ana Express</h1>
+          <h1 className="text-2xl">Kana Express</h1>
         </div>
       </nav>
     </>
