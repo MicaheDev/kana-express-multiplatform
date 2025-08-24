@@ -54,7 +54,7 @@ export default function PracticeMenu({
       {
         element: "#selector-hiragana",
         popover: {
-          title: "Paso 1: Elige el silabario",
+          title: "Elige el silabario",
           description:
             "Selecciona el silabario de **Hiragana** para empezar a practicar.",
           side: "right",
@@ -123,7 +123,7 @@ export default function PracticeMenu({
             practice1.destroy();
           },
 
-          title: "Paso 3: ¡Comienza a practicar!",
+          title: "¡Comienza a practicar!",
           description:
             "Cuando estés listo, haz clic en este botón para iniciar la sesión de practica del silabario seleccionado.",
           side: "top",

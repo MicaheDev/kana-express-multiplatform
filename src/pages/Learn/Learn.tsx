@@ -34,7 +34,7 @@ export default function Learn() {
       {
         element: "#selector-hiragana",
         popover: {
-          title: "Paso 1: Elige el silabario",
+          title: "Elige el silabario",
           description:
             "Aquí puedes seleccionar el modo de aprendizaje **Hiragana**. Verás sus caracteres listos para practicar.",
           side: "right", // Cambiamos a 'right' para que no tape el otro botón
@@ -54,7 +54,7 @@ export default function Learn() {
       {
         element: "#characters-to-learn > div:first-child",
         popover: {
-          title: "Paso 2: Explora los caracteres",
+          title: "Explora los caracteres",
           description:
             "En esta sección, se muestran todos los caracteres del silabario que has elegido. Puedes verlos antes de empezar.",
           side: "top", // Muestra el popover arriba para evitar el scroll lateral
@@ -71,7 +71,7 @@ export default function Learn() {
             driverObj.destroy();
           },
 
-          title: "Paso 3: ¡Comienza a practicar!",
+          title: "Comienza a practicar!",
           description:
             "Cuando estés listo, haz clic en este botón para iniciar la sesión de aprendizaje del silabario seleccionado.",
           side: "top",

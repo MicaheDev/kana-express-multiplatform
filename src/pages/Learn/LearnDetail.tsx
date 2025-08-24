@@ -35,11 +35,11 @@ export default function LearnDetail() {
       {
         element: "#grid",
         popover: {
-          title: "Paso 2: La tabla de caracteres",
+          title: "La tabla de caracteres",
           description:
             "Esta es la tabla completa de caracteres del silabario. Funciona como una tabla de coordenadas para multiplicar: las **guías horizontales (vocales)** y las **guías verticales (consonantes)** se combinan para formar cada carácter en la cuadrícula.",
-          side: "top",
-          align: "start",
+          side: "over",
+          align: "center",
         },
       },
       {
@@ -77,7 +77,7 @@ export default function LearnDetail() {
         element: "#row-2 > div:nth-child(2)",
 
         popover: {
-          title: "Paso 3: ¡Comienza a practicar!",
+          title: "Comienza a practicar!",
           description:
             "Cuando estés listo, haz clic en este botón para iniciar la sesión de aprendizaje del silabario seleccionado.",
           side: "top",
@@ -107,10 +107,10 @@ export default function LearnDetail() {
       {
         element: "#board",
         popover: {
-          title: "Paso 4: ¡Es hora de escribir!",
+          title: "¡Es hora de escribir!",
           description:
             "Este es el **lienzo de escritura**. Aquí verás una guía que te muestra **trazo por trazo** cómo escribir el carácter correctamente. El **orden de los trazos es muy importante** y te ayudará a memorizarlo de forma efectiva.",
-          side: "top",
+          side: "over",
           align: "center",
         },
       },
