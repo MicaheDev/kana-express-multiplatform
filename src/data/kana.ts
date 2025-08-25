@@ -83,10 +83,9 @@ export const HiraganaDakutenList: KanaPractice = {
   ず: "zu",
   ぜ: "ze",
   ぞ: "zo",
-
   だ: "da",
-  ぢ: "ji",
-  づ: "zu",
+  ぢ: "di",
+  づ: "du",
   で: "de",
   ど: "do",
   ば: "ba",
