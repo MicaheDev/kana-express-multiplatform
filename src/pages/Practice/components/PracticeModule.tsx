@@ -237,6 +237,10 @@ export default function PracticeModule() {
   }
 
   function handleAvoid() {
+    const answer = selectedChar?.romaji;
+    if (!answer) return;
+    setInput(answer);
+
     if (wrongRef.current) {
       wrongRef.current.currentTime = 0;
       wrongRef.current.play();
@@ -247,7 +251,9 @@ export default function PracticeModule() {
       setWrongCharacters((prevSet) => new Set(prevSet).add(selectedChar.kana));
     }
 
-    handleNext();
+    setTimeout(() => {
+      handleNext();
+    }, 1000);
   }
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -338,7 +344,7 @@ export default function PracticeModule() {
         setIsVisible={setIsComplete}
         showClose={false}
       >
-        <div className="w-full h-full flex flex-col justify-center items-center gap-6">
+        <div className="w-full min-h-full h-auto flex flex-col justify-center items-center gap-6">
           {progressInfo && (
             <div className="relative">
               <img
@@ -367,6 +373,31 @@ export default function PracticeModule() {
               Realizastes {quizList.length - mistakes}/{quizList.length}
             </h2>
           </div>
+          {
+            average && average > 50 && (
+              <audio src="/win.mp3" autoPlay></audio>
+            )
+          }
+
+          {wrongCharacters.size > 0 && (
+            <div className="flex flex-col w-full items-center gap-2 border-t py-4">
+              <h3 className="text-center w-3/4">
+                Sigue practicando los siguientes caracteres
+              </h3>
+              <div className="grid grid-cols-3 row-auto gap-2">
+                {Array.from(wrongCharacters).map((char, index) => (
+                  <div
+                    key={index}
+                    className="shadow-up w-[80px] h-[60px] border gap-2 border-characters dark:border-dark-characters flex justify-center items-center rounded-xl text-characters dark:text-dark-characters"
+                  >
+                    <p className="text-2xl font-jpn"> {char}</p>
+                    {quizList.find((item) => item.kana === char)?.romaji}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <Button
             onClick={() => {
               navigate("/practice");
