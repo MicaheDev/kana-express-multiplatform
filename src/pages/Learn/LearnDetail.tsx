@@ -180,7 +180,9 @@ export default function LearnDetail() {
       case "dakuten":
         return kanaType === "hiragana" ? hiraganaDakuten : katakanaDakuten;
       case "combo":
-        return kanaType === "hiragana" ? hiraganaCombinations : katakanaCombinations;
+        return kanaType === "hiragana"
+          ? hiraganaCombinations
+          : katakanaCombinations;
       default:
         return kanaType === "hiragana" ? hiragana : katakana;
     }
@@ -217,7 +219,7 @@ export default function LearnDetail() {
     }
 
     // Si el tutorial NO se ha mostrado, inicia el tour
-    if (!tutorialHasBeenShown) {
+    if (!tutorialHasBeenShown && variation === "main") {
       driverObj1.drive();
       // Y guarda el estado para que no se vuelva a mostrar
     }
@@ -592,7 +594,7 @@ export default function LearnDetail() {
                 </div>
               </div>
 
-              {gif && (
+              {gif && variation !== "combo" && (
                 <img
                   className={`w-full mix-blend-multiply pt-[70px] h-full object-contain absolute inset-0 m-auto pointer-events-none transition-opacity duration-300 ${
                     showGif ? "opacity-30" : "opacity-0"
@@ -601,6 +603,20 @@ export default function LearnDetail() {
                     kanaType === "hiragana" ? "hiragana" : "katakana"
                   }/${gif}`}
                   width="10px"
+                  height="10px"
+                  alt="GIF animado del trazo del kanji"
+                />
+              )}
+
+              {gif && variation === "combo" && (
+                <img
+                  className={`w-full mix-blend-multiply pt-[70px] object-right scale-110 object-cover absolute inset-0 m-auto pointer-events-none transition-opacity duration-300 ${
+                    showGif ? "opacity-30" : "opacity-0"
+                  } `}
+                  src={`/gifs/${
+                    kanaType === "hiragana" ? "hiragana" : "katakana"
+                  }/${gif}`}
+                  width="20px"
                   height="10px"
                   alt="GIF animado del trazo del kanji"
                 />

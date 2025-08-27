@@ -113,7 +113,7 @@ export default function Learn() {
         },
       },
       {
-        element: "#start-button",
+        element: "#btn-main",
         popover: {
           onNextClick: () => {
             const tutorial = true;
@@ -211,8 +211,9 @@ export default function Learn() {
         bottomBar={<NavigationBottomBar />}
       >
         <div className="flex flex-col gap-6">
-          {Object.entries(kana).map(([_, value]) => (
-            <div key={_} className="flex flex-col gap-6">
+          {Object.entries(kana).map(([_, value]) => {
+            
+            return <div key={_} className="flex flex-col gap-6">
               <h3 className="text-center">{value.title}</h3>
               <div
                 id="characters-to-learn"
@@ -220,6 +221,7 @@ export default function Learn() {
               >
                 {value.data.map(([char, pronunciation]) => (
                   <div
+                  id={`lok-${value.route}`}
                     key={char}
                     className="shadow-up flex flex-col bg-contrast-bg text-characters dark:text-dark-characters dark:bg-dark-contrast-bg justify-center items-center p-2 rounded-xl border border-characters dark:border-dark-characters "
                   >
@@ -230,7 +232,7 @@ export default function Learn() {
               </div>
 
               <Button
-                id="start-button"
+              id={ `btn-${value.route}`}
                 onClick={() => {
                   const params = createSearchParams({
                     variation: value.route,
@@ -244,7 +246,7 @@ export default function Learn() {
                 {value.btnTitle}
               </Button>
             </div>
-          ))}
+})}
         </div>
       </Scaffold>
     </>
