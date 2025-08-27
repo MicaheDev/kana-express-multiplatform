@@ -62,6 +62,10 @@
     }
   }
 
+  #grid {
+      clip-path: inset(0 round 8px);
+  }
+
   #bottom-sheet {
     @apply fixed flex flex-col bg-background dark:bg-dark-background overflow-hidden w-screen h-screen z-[100] duration-300 transition-transform top-0;
 

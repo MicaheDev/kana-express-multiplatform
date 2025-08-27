@@ -17,7 +17,7 @@ export default function KanaGrid({
   return (
     <div
       id="grid"
-      className="w-ful bg-characters dark:bg-dark-characters min-h-[550px] max-h-[550px] outline grow overflow-hidden outline-characters dark:outline-dark-characters flex flex-col rounded-xl select-none"
+      className="w-full bg-characters dark:bg-dark-characters outline border border-characters dark:border-dark-characters  outline-characters dark:outline-dark-characters flex flex-col rounded-xl select-none"
     >
       {/* Filas*/}
       {kana.map((_, row) => (

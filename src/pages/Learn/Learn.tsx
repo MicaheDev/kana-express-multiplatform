@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
-import { HiraganaList, KatakanaList, Modes } from "../../data/kana";
+import {
+  HiraganaCombinationList,
+  HiraganaDakutenList,
+  HiraganaList,
+  KatakanaCombinationList,
+  KatakanaDakutenList,
+  KatakanaList,
+  Modes,
+} from "../../data/kana";
 import NavigationBottomBar from "../../components/NavigationBottomBar";
-import { useNavigate } from "react-router";
+import { createSearchParams, useNavigate } from "react-router";
 import Button from "../../components/Button";
 import Scaffold from "../../components/Scaffold";
 import { driver } from "driver.js";
@@ -11,6 +19,49 @@ interface MenuItem {
   label: string;
   name: string;
 }
+
+const hiragana = {
+  mainKana: {
+    title: "Principales",
+    data: [...Object.entries(HiraganaList)],
+    btnTitle: "Comenzar modulo #1",
+    route: "main",
+  },
+  dakutenKana: {
+    title: "Dakuten",
+    data: [...Object.entries(HiraganaDakutenList)],
+    btnTitle: "Comenzar modulo #2",
+    route: "dakuten",
+  },
+  comboKana: {
+    title: "Combinados",
+    data: [...Object.entries(HiraganaCombinationList)],
+    btnTitle: "Comenzar modulo #3",
+    route: "combo",
+  },
+};
+
+const katakana = {
+  mainKana: {
+    title: "Principales",
+    data: [...Object.entries(KatakanaList)],
+    btnTitle: "Comenzar modulo #1",
+    route: "main",
+  },
+  dakutenKana: {
+    title: "Dakuten",
+    data: [...Object.entries(KatakanaDakutenList)],
+    btnTitle: "Comenzar modulo #2",
+    route: "dakuten",
+  },
+  comboKana: {
+    title: "Combinados",
+    data: [...Object.entries(KatakanaCombinationList)],
+    btnTitle: "Comenzar modulo #3",
+    route: "combo",
+  },
+};
+
 const modeMenu: MenuItem[] = [
   {
     label: "Hiragana",
@@ -25,10 +76,10 @@ export default function Learn() {
   const driverObj = driver({
     showProgress: true,
     smoothScroll: true, // Habilita el scroll suave para una mejor experiencia
-     onCloseClick: () => {
+    onCloseClick: () => {
       const tutorial = true;
       localStorage.setItem("learn1", JSON.stringify(tutorial));
-      driverObj.destroy()
+      driverObj.destroy();
     },
     steps: [
       {
@@ -86,23 +137,16 @@ export default function Learn() {
   const [selectedMode, setSelectedMode] = useState<Modes>(Modes.hiragana);
 
   const [kana, setKana] = useState(
-    selectedMode === "hiragana"
-      ? [...Object.entries(HiraganaList)]
-      : [...Object.entries(KatakanaList)]
+    selectedMode === "hiragana" ? hiragana : katakana
   );
 
   function changeSelection(item: MenuItem) {
     setSelectedMode(item.name as Modes);
-    setKana(
-      item.name === "hiragana"
-        ? [...Object.entries(HiraganaList)]
-        : [...Object.entries(KatakanaList)]
-    );
+    setKana(item.name === "hiragana" ? hiragana : katakana);
   }
 
   // dentro de tu componente Learn
   useEffect(() => {
-
     // Obtener el valor de localStorage
     const data = localStorage.getItem("learn1");
     let tutorialHasBeenShown = false;
@@ -167,27 +211,40 @@ export default function Learn() {
         bottomBar={<NavigationBottomBar />}
       >
         <div className="flex flex-col gap-6">
-          <div
-            id="characters-to-learn"
-            className="grid grid-rows-10 grid-cols-5 gap-3"
-          >
-            {kana.map(([key, value]) => (
+          {Object.entries(kana).map(([_, value]) => (
+            <div key={_} className="flex flex-col gap-6">
+              <h3 className="text-center">{value.title}</h3>
               <div
-                key={key}
-                className="shadow-up flex flex-col bg-contrast-bg text-characters dark:text-dark-characters dark:bg-dark-contrast-bg justify-center items-center p-2 rounded-xl border border-characters dark:border-dark-characters "
+                id="characters-to-learn"
+                className="grid rows-auto grid-cols-5 gap-3"
               >
-                <h3 className="text-lg">{key}</h3>
-                <p className="text-decoration text-xs">{value}</p>
+                {value.data.map(([char, pronunciation]) => (
+                  <div
+                    key={char}
+                    className="shadow-up flex flex-col bg-contrast-bg text-characters dark:text-dark-characters dark:bg-dark-contrast-bg justify-center items-center p-2 rounded-xl border border-characters dark:border-dark-characters "
+                  >
+                    <h3 className="text-lg font-jpn">{char}</h3>
+                    <p className="text-decoration text-xs">{pronunciation}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <Button
-            id="start-button"
-            onClick={() => navigate(`/learn/${selectedMode}`)}
-          >
-            Comenzar
-          </Button>
+              <Button
+                id="start-button"
+                onClick={() => {
+                  const params = createSearchParams({
+                    variation: value.route,
+                  });
+                  navigate({
+                    pathname: `/learn/${selectedMode}`,
+                    search: `?${params.toString()}`,
+                  });
+                }}
+              >
+                {value.btnTitle}
+              </Button>
+            </div>
+          ))}
         </div>
       </Scaffold>
     </>

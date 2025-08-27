@@ -309,6 +309,120 @@ export const hiragana: KanaGrid[][] = [
   ],
 ];
 
+export const hiraganaDakuten: KanaGrid[][] = [
+  ["", "a", "i", "u", "e", "o"],
+  [
+    "g",
+    { sound: "ga.mp3", gif: "が.gif", label: "が", todo: false, strokes: 3 },
+    { sound: "gi.mp3", gif: "ぎ.gif", label: "ぎ", todo: false, strokes: 4 },
+    { sound: "gu.mp3", gif: "ぐ.gif", label: "ぐ", todo: false, strokes: 1 },
+    { sound: "ge.mp3", gif: "げ.gif", label: "げ", todo: false, strokes: 3 },
+    { sound: "go.mp3", gif: "ご.gif", label: "ご", todo: false, strokes: 2 },
+  ],
+  [
+    "z",
+    { sound: "za.mp3", gif: "ざ.gif", label: "ざ", todo: false, strokes: 2 },
+    { sound: "ji.mp3", gif: "じ.gif", label: "じ", todo: false, strokes: 2 },
+    { sound: "zu.mp3", gif: "ず.gif", label: "ず", todo: false, strokes: 2 },
+    { sound: "ze.mp3", gif: "ぜ.gif", label: "ぜ", todo: false, strokes: 3 },
+    { sound: "zo.mp3", gif: "ぞ.gif", label: "ぞ", todo: false, strokes: 2 },
+  ],
+  [
+    "d",
+    { sound: "da.mp3", gif: "だ.gif", label: "だ", todo: false, strokes: 2 },
+    { sound: "ji.mp3", gif: "ぢ.gif", label: "ぢ", todo: false, strokes: 2 },
+    { sound: "zu.mp3", gif: "づ.gif", label: "づ", todo: false, strokes: 2 },
+    { sound: "de.mp3", gif: "で.gif", label: "で", todo: false, strokes: 2 },
+    { sound: "do.mp3", gif: "ど.gif", label: "ど", todo: false, strokes: 2 },
+  ],
+  [
+    "b",
+    { sound: "ba.mp3", gif: "ば.gif", label: "ば", todo: false, strokes: 3 },
+    { sound: "bi.mp3", gif: "び.gif", label: "び", todo: false, strokes: 4 },
+    { sound: "bu.mp3", gif: "ぶ.gif", label: "ぶ", todo: false, strokes: 3 },
+    { sound: "be.mp3", gif: "べ.gif", label: "べ", todo: false, strokes: 4 },
+    { sound: "bo.mp3", gif: "ぼ.gif", label: "ぼ", todo: false, strokes: 3 },
+  ],
+  [
+    "p",
+    { sound: "pa.mp3", gif: "ぱ.gif", label: "ぱ", todo: false, strokes: 3 },
+    { sound: "pi.mp3", gif: "ぴ.gif", label: "ぴ", todo: false, strokes: 4 },
+    { sound: "pu.mp3", gif: "ぷ.gif", label: "ぷ", todo: false, strokes: 3 },
+    { sound: "pe.mp3", gif: "ぺ.gif", label: "ぺ", todo: false, strokes: 4 },
+    { sound: "po.mp3", gif: "ぽ.gif", label: "ぽ", todo: false, strokes: 3 },
+  ],
+];
+
+export const hiraganaCombinations: KanaGrid[][] = [
+  ["", "a", "u", "o"],
+  [
+    "ky",
+    { sound: "kya.mp3", gif: "きゃ.gif", label: "きゃ", todo: false, strokes: 7 },
+    { sound: "kyu.mp3", gif: "きゅ.gif", label: "きゅ", todo: false, strokes: 6 },
+    { sound: "kyo.mp3", gif: "きょ.gif", label: "きょ", todo: false, strokes: 6 },
+  ],
+  [
+    "sh",
+    { sound: "sha.mp3", gif: "しゃ.gif", label: "しゃ", todo: false, strokes: 4 },
+    { sound: "shu.mp3", gif: "しゅ.gif", label: "しゅ", todo: false, strokes: 3 },
+    { sound: "sho.mp3", gif: "しょ.gif", label: "しょ", todo: false, strokes: 3 },
+  ],
+  [
+    "ch",
+    { sound: "cha.mp3", gif: "ちゃ.gif", label: "ちゃ", todo: false, strokes: 5},
+    { sound: "chu.mp3", gif: "ちゅ.gif", label: "ちゅ", todo: false, strokes: 4 },
+    { sound: "cho.mp3", gif: "ちょ.gif", label: "ちょ", todo: false, strokes: 4 },
+  ],
+  [
+    "ny",
+    { sound: "nya.mp3", gif: "にゃ.gif", label: "にゃ", todo: false, strokes: 6 },
+    { sound: "nyu.mp3", gif: "にゅ.gif", label: "にゅ", todo: false, strokes: 5 },
+    { sound: "nyo.mp3", gif: "にょ.gif", label: "にょ", todo: false, strokes: 5 },
+  ],
+  [
+    "hy",
+    { sound: "hya.mp3", gif: "ひゃ.gif", label: "ひゃ", todo: false, strokes: 4 },
+    { sound: "hyu.mp3", gif: "ひゅ.gif", label: "ひゅ", todo: false, strokes: 3 },
+    { sound: "hyo.mp3", gif: "ひょ.gif", label: "ひょ", todo: false, strokes: 3 },
+  ],
+  [
+    "my",
+    { sound: "mya.mp3", gif: "みゃ.gif", label: "みゃ", todo: false, strokes: 5 },
+    { sound: "myu.mp3", gif: "みゅ.gif", label: "みゅ", todo: false, strokes: 4 },
+    { sound: "myo.mp3", gif: "みょ.gif", label: "みょ", todo: false, strokes: 4 },
+  ],
+  [
+    "ry",
+    { sound: "rya.mp3", gif: "りゃ.gif", label: "りゃ", todo: false, strokes: 5 },
+    { sound: "ryu.mp3", gif: "りゅ.gif", label: "りゅ", todo: false, strokes: 4 },
+    { sound: "ryo.mp3", gif: "りょ.gif", label: "りょ", todo: false, strokes: 4 },
+  ],
+  [
+    "gy",
+    { sound: "gya.mp3", gif: "ぎゃ.gif", label: "ぎゃ", todo: false, strokes: 9 },
+    { sound: "gyu.mp3", gif: "ぎゅ.gif", label: "ぎゅ", todo: false, strokes: 8 },
+    { sound: "gyo.mp3", gif: "ぎょ.gif", label: "ぎょ", todo: false, strokes: 8 },
+  ],
+  [
+    "j",
+    { sound: "ja.mp3", gif: "じゃ.gif", label: "じゃ", todo: false, strokes: 6 },
+    { sound: "ju.mp3", gif: "じゅ.gif", label: "じゅ", todo: false, strokes: 5 },
+    { sound: "jo.mp3", gif: "じょ.gif", label: "じょ", todo: false, strokes: 5 },
+  ],
+  [
+    "by",
+    { sound: "bya.mp3", gif: "びゃ.gif", label: "びゃ", todo: false, strokes: 6 },
+    { sound: "byu.mp3", gif: "びゅ.gif", label: "びゅ", todo: false, strokes: 5 },
+    { sound: "byo.mp3", gif: "びょ.gif", label: "びょ", todo: false, strokes: 5 },
+  ],
+  [
+    "py",
+    { sound: "pya.mp3", gif: "ぴゃ.gif", label: "ぴゃ", todo: false, strokes: 5 },
+    { sound: "pyu.mp3", gif: "ぴゅ.gif", label: "ぴゅ", todo: false, strokes: 4 },
+    { sound: "pyo.mp3", gif: "ぴょ.gif", label: "ぴょ", todo: false, strokes: 4 },
+  ],
+];
+
 export const katakana: KanaGrid[][] = [
   ["", "a", "i", "u", "e", "o"],
   [
@@ -390,5 +504,119 @@ export const katakana: KanaGrid[][] = [
     { sound: "n.mp3", gif: "ン.gif", label: "ン", todo: false, strokes: 2 },
     "",
     { sound: "wo.mp3", gif: "ヲ.gif", label: "ヲ", todo: false, strokes: 3 },
+  ],
+];
+
+export const katakanaDakuten: KanaGrid[][] = [
+  ["", "a", "i", "u", "e", "o"],
+  [
+    "g",
+    { sound: "ga.mp3", gif: "ガ.gif", label: "ガ", todo: false, strokes: 2 },
+    { sound: "gi.mp3", gif: "ギ.gif", label: "ギ", todo: false, strokes: 3 },
+    { sound: "gu.mp3", gif: "グ.gif", label: "グ", todo: false, strokes: 2 },
+    { sound: "ge.mp3", gif: "ゲ.gif", label: "ゲ", todo: false, strokes: 3 },
+    { sound: "go.mp3", gif: "ゴ.gif", label: "ゴ", todo: false, strokes: 3 },
+  ],
+  [
+    "z",
+    { sound: "za.mp3", gif: "ザ.gif", label: "ザ", todo: false, strokes: 3 },
+    { sound: "ji.mp3", gif: "ジ.gif", label: "ジ", todo: false, strokes: 3 },
+    { sound: "zu.mp3", gif: "ズ.gif", label: "ズ", todo: false, strokes: 3 },
+    { sound: "ze.mp3", gif: "ゼ.gif", label: "ゼ", todo: false, strokes: 3 },
+    { sound: "zo.mp3", gif: "ゾ.gif", label: "ゾ", todo: false, strokes: 3 },
+  ],
+  [
+    "d",
+    { sound: "da.mp3", gif: "ダ.gif", label: "ダ", todo: false, strokes: 3 },
+    { sound: "ji.mp3", gif: "ヂ.gif", label: "ヂ", todo: false, strokes: 3 },
+    { sound: "zu.mp3", gif: "ヅ.gif", label: "ヅ", todo: false, strokes: 3 },
+    { sound: "de.mp3", gif: "デ.gif", label: "デ", todo: false, strokes: 3 },
+    { sound: "do.mp3", gif: "ド.gif", label: "ド", todo: false, strokes: 2 },
+  ],
+  [
+    "b",
+    { sound: "ba.mp3", gif: "バ.gif", label: "バ", todo: false, strokes: 2 },
+    { sound: "bi.mp3", gif: "ビ.gif", label: "ビ", todo: false, strokes: 3 },
+    { sound: "bu.mp3", gif: "ブ.gif", label: "ブ", todo: false, strokes: 2 },
+    { sound: "be.mp3", gif: "ベ.gif", label: "ベ", todo: false, strokes: 3 },
+    { sound: "bo.mp3", gif: "ボ.gif", label: "ボ", todo: false, strokes: 3 },
+  ],
+  [
+    "p",
+    { sound: "pa.mp3", gif: "パ.gif", label: "パ", todo: false, strokes: 2 },
+    { sound: "pi.mp3", gif: "ピ.gif", label: "ピ", todo: false, strokes: 3 },
+    { sound: "pu.mp3", gif: "プ.gif", label: "プ", todo: false, strokes: 2 },
+    { sound: "pe.mp3", gif: "ペ.gif", label: "ペ", todo: false, strokes: 3 },
+    { sound: "po.mp3", gif: "ポ.gif", label: "ポ", todo: false, strokes: 3 },
+  ],
+];
+
+export const katakanaCombinations: KanaGrid[][] = [
+  ["", "a", "u", "o"],
+  [
+    "ky",
+    { sound: "kya.mp3", gif: "キャ.gif", label: "キャ", todo: false, strokes: 5 },
+    { sound: "kyu.mp3", gif: "キュ.gif", label: "キュ", todo: false, strokes: 5 },
+    { sound: "kyo.mp3", gif: "キョ.gif", label: "キョ", todo: false, strokes: 6 },
+  ],
+  [
+    "sh",
+    { sound: "sha.mp3", gif: "シャ.gif", label: "シャ", todo: false, strokes: 5 },
+    { sound: "shu.mp3", gif: "シュ.gif", label: "シュ", todo: false, strokes: 5 },
+    { sound: "sho.mp3", gif: "ショ.gif", label: "ショ", todo: false, strokes: 6 },
+  ],
+  [
+    "ch",
+    { sound: "cha.mp3", gif: "チャ.gif", label: "チャ", todo: false, strokes: 5 },
+    { sound: "chu.mp3", gif: "チュ.gif", label: "チュ", todo: false, strokes: 5 },
+    { sound: "cho.mp3", gif: "チョ.gif", label: "チョ", todo: false, strokes: 6 },
+  ],
+  [
+    "ny",
+    { sound: "nya.mp3", gif: "ニャ.gif", label: "ニャ", todo: false, strokes: 4 },
+    { sound: "nyu.mp3", gif: "ニュ.gif", label: "ニュ", todo: false, strokes: 4 },
+    { sound: "nyo.mp3", gif: "ニョ.gif", label: "ニョ", todo: false, strokes: 5 },
+  ],
+  [
+    "hy",
+    { sound: "hya.mp3", gif: "ヒャ.gif", label: "ヒャ", todo: false, strokes: 4 },
+    { sound: "hyu.mp3", gif: "ヒュ.gif", label: "ヒュ", todo: false, strokes: 4 },
+    { sound: "hyo.mp3", gif: "ヒョ.gif", label: "ヒョ", todo: false, strokes: 5 },
+  ],
+  [
+    "my",
+    { sound: "mya.mp3", gif: "ミャ.gif", label: "ミャ", todo: false, strokes: 5 },
+    { sound: "myu.mp3", gif: "ミュ.gif", label: "ミュ", todo: false, strokes: 5 },
+    { sound: "myo.mp3", gif: "ミョ.gif", label: "ミョ", todo: false, strokes: 6 },
+  ],
+  [
+    "ry",
+    { sound: "rya.mp3", gif: "リャ.gif", label: "リャ", todo: false, strokes: 4 },
+    { sound: "ryu.mp3", gif: "リュ.gif", label: "リュ", todo: false, strokes: 4 },
+    { sound: "ryo.mp3", gif: "リョ.gif", label: "リョ", todo: false, strokes: 5 },
+  ],
+  [
+    "gy",
+    { sound: "gya.mp3", gif: "ギャ.gif", label: "ギャ", todo: false, strokes: 7 },
+    { sound: "gyu.mp3", gif: "ギュ.gif", label: "ギュ", todo: false, strokes: 7 },
+    { sound: "gyo.mp3", gif: "ギョ.gif", label: "ギョ", todo: false, strokes: 8 },
+  ],
+  [
+    "j",
+    { sound: "ja.mp3", gif: "ジャ.gif", label: "ジャ", todo: false, strokes: 7 },
+    { sound: "ju.mp3", gif: "ジュ.gif", label: "ジュ", todo: false, strokes: 7 },
+    { sound: "jo.mp3", gif: "ジョ.gif", label: "ジョ", todo: false, strokes: 8 },
+  ],
+  [
+    "by",
+    { sound: "bya.mp3", gif: "ビャ.gif", label: "ビャ", todo: false, strokes: 6 },
+    { sound: "byu.mp3", gif: "ビュ.gif", label: "ビュ", todo: false, strokes: 6 },
+    { sound: "byo.mp3", gif: "ビョ.gif", label: "ビョ", todo: false, strokes: 7 },
+  ],
+  [
+    "py",
+    { sound: "pya.mp3", gif: "ピャ.gif", label: "ピャ", todo: false, strokes: 5 },
+    { sound: "pyu.mp3", gif: "ピュ.gif", label: "ピュ", todo: false, strokes: 5 },
+    { sound: "pyo.mp3", gif: "ピョ.gif", label: "ピョ", todo: false, strokes: 6 },
   ],
 ];

@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { hiragana, katakana, type Kana } from "../../data/kana";
-import { useParams } from "react-router";
+import {
+  hiragana,
+  hiraganaCombinations,
+  hiraganaDakuten,
+  katakana,
+  katakanaCombinations,
+  katakanaDakuten,
+  type Kana,
+} from "../../data/kana";
+import { useParams, useSearchParams } from "react-router";
 import type { BoardRef } from "../../components/Board";
 import Board from "../../components/Board";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -157,14 +165,26 @@ export default function LearnDetail() {
   });
 
   const { kana: kanaType } = useParams<{ kana: string }>();
+  const [searchParams] = useSearchParams();
+
+  const variation = searchParams.get("variation");
 
   const [showBoard, setShowBoard] = useState(false);
   const [showProgress, setShowProgress] = useState(false);
 
   // Seleccionar el array basado en el parámetro
-  const [kana, setKana] = useState(
-    kanaType === "hiragana" ? [...hiragana] : [...katakana]
-  );
+  const [kana, setKana] = useState(() => {
+    switch (variation) {
+      case "main":
+        return kanaType === "hiragana" ? hiragana : katakana;
+      case "dakuten":
+        return kanaType === "hiragana" ? hiraganaDakuten : katakanaDakuten;
+      case "combo":
+        return kanaType === "hiragana" ? hiraganaCombinations : katakanaCombinations;
+      default:
+        return kanaType === "hiragana" ? hiragana : katakana;
+    }
+  });
   const successRef = useRef<HTMLAudioElement | null>(null);
   const wrongRef = useRef<HTMLAudioElement | null>(null);
 
