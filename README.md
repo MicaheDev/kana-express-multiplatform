@@ -1,5 +1,3 @@
-Aquí tienes el *markdown* para tu proyecto **kana-express-multiplatform**, listo para usar en tu repositorio de GitHub. He estructurado la información de forma clara y he incluido todas las secciones que mencionaste.
-
 # **Kana-Express: Aprende Hiragana y Katakana de forma interactiva**
 
 **Kana-Express** es una aplicación multiplataforma diseñada para ayudarte a aprender y dominar los silabarios japoneses **Hiragana** y **Katakana** a través de la escritura y la repetición. Con un módulo de práctica interactivo, la app te ayuda a reforzar tus conocimientos para que nunca los olvides.
